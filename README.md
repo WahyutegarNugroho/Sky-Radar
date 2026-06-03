@@ -1,84 +1,153 @@
-# SkyRadar 📡⛈️
+# SkyRadar — Platform Pemantau Cuaca & Peta Radar Hujan Real-time
 
 ### Deskripsi Singkat
-**SkyRadar** adalah aplikasi pemantau cuaca presisi tinggi dengan peta radar curah hujan real-time (RainViewer) dan citra satelit Himawari-9 milik NASA. Dashboard modern ini dirancang untuk menampilkan data cuaca secara interaktif, cepat, dan presisi di Indonesia dengan antarmuka premium berbasis Next.js dan Tailwind CSS v4.
-
----
+SkyRadar adalah aplikasi pemantau cuaca presisi tinggi dengan visualisasi peta radar curah hujan real-time (RainViewer) dan citra satelit Himawari-9 (NASA GIBS). Aplikasi ini menjembatani kebutuhan informasi cuaca aktual dengan antarmuka peta interaktif, pencarian lokasi presisi, bookmark berbasis cloud, serta sistem alarm ambang batas (threshold) cuaca ekstrem kustom — semua dikemas dalam satu platform yang modern, responsif, aman, dan PWA-ready.
 
 ### Problem yang Diselesaikan
-1. **Prakiraan Cuaca Lambat & Kurang Interaktif**: Aplikasi cuaca konvensional seringkali hanya menampilkan teks/angka statis. SkyRadar menyajikan data melalui visualisasi dinamis (peta satelit & radar hujan aktual).
-2. **Keterbatasan Informasi Lingkungan**: Menyediakan data lengkap terpadu mulai dari prakiraan suhu harian, kelembaban, radiasi, arah/kecepatan angin, hingga indeks kualitas udara (AQI).
-3. **Sinkronisasi Preferensi Lokasi**: Pengguna sering kehilangan lokasi favorit mereka saat berganti perangkat. SkyRadar mengintegrasikan sistem autentikasi cloud yang aman untuk menyimpan bookmark lokasi dan preferensi peta.
+* **Prakiraan Cuaca Statis** — Aplikasi cuaca konvensional hanya menyajikan angka tanpa visualisasi dinamis. SkyRadar menyediakan peta animasi radar/satelit langsung.
+* **Kehilangan Data Bookmark** — Pengguna sering kehilangan koordinat lokasi favorit saat berganti browser. SkyRadar menyinkronkan bookmark lokasi dan preferensi peta secara cloud.
+* **Tidak Ada Peringatan Kustom** — Warga tidak memiliki kontrol atas apa yang dikategorikan sebagai cuaca ekstrem. Fitur Threshold Editor kami memungkinkan kustomisasi ambang batas alarm angin kencang dan curah hujan lebat secara personal.
 
 ---
 
 ### Fitur Utama
-1. **Interactive Weather Map**: Peta interaktif menggunakan Leaflet dengan visualisasi lapisan radar curah hujan (RainViewer) dan animasi pergerakan awan.
-2. **Live Satellite Feed**: Simulasi citra satelit Himawari-9 (NASA GIBS) real-time berfokus di atas wilayah Jakarta, ID, dengan indikator target presisi.
-3. **Open-Meteo Integration**: Prakiraan cuaca real-time yang mencakup suhu, kelembaban, angin, curah hujan, radiasi matahari, dan visualisasi grafik tren suhu mingguan (**Weather Trends**).
-4. **Air Quality Index (AQI)**: Telemetri tingkat kualitas udara Jakarta berbasis standar US AQI.
-5. **Autentikasi & Penyimpanan Cloud**: Registrasi & Login aman (Better-Auth) terintegrasi dengan database cloud PostgreSQL untuk menyimpan bookmark lokasi favorit dan kustomisasi peta.
+
+#### 1. Sistem Authentication & Keamanan
+* Registrasi dan Login aman menggunakan **Better-Auth**.
+* Pengamanan API dengan internal server-side proxying untuk menyembunyikan query eksternal.
+* Rate Limiting berbasis IP pada *middleware* Next.js untuk mencegah spamming requests.
+* Validasi input yang ketat pada preferensi dan bookmark di tingkat API menggunakan skema validasi terpusat.
+
+#### 2. Interactive Map & Timeline Animation
+* Peta interaktif berbasis **Leaflet** + **React-Leaflet v5** dengan penanda kluster (*marker clustering*).
+* Lapisan radar cuaca aktual (RainViewer) dengan timeline player animasi pergerakan awan.
+* Lapisan citra satelit Himawari-9 NASA GIBS (IR Clean) dengan target koordinat presisi.
+* Pilihan visualisasi peta yang adaptif (*Dark Mode*, *Light Mode*, *Satellite Imagery*).
+
+#### 3. Open-Meteo Integration & Detail Weather Card
+* Telemetri cuaca lengkap: suhu saat ini, kelembaban, curah hujan, radiasi matahari, kecepatan/arah angin, dan US AQI (Kualitas Udara).
+* Weather Card modular dengan chart tren suhu per-jam (**Hourly Trend Chart**), chart variasi suhu harian (**Weather Chart**), serta prakiraan cuaca 7 hari (**Weather Daily**).
+* Penanganan visual terpadu yang adaptif terhadap *dark/light mode* dan jenis cuaca saat ini.
+
+#### 4. Dashboard Lokasi Favorit (Multi-Location Weather)
+* Panel dashboard khusus yang menampilkan ikhtisar cuaca terkini untuk semua lokasi yang disimpan (bookmark) warga.
+* Inisialisasi status memuat (*loading state*) yang instan dan independen per lokasi untuk mencegah kebingungan pengguna.
+* Pencegahan siklus pembaruan tak terbatas (*render loop*) menggunakan caching dan perbandingan dependensi berbasis string.
+
+#### 5. Custom Alert & Threshold Editor
+* Indikator peringatan dini (*warning banner*) pada Weather Card jika parameter cuaca melampaui batas aman.
+* Editor interaktif bagi pengguna terautentikasi untuk mengonfigurasi ambang batas personal untuk alarm angin kencang (km/h) dan curah hujan lebat (mm).
+
+#### 6. Pencarian Lokasi & Map Picker
+* Pencarian lokasi cepat berbasis proxy Nominatim dengan dukungan pencarian geografis.
+* Fitur klik peta langsung (*Map Picker*) untuk menjatuhkan marker koordinat apa saja sekaligus menyimpan lokasi tersebut ke bookmark cloud.
+
+#### 7. PWA (Progressive Web App)
+* Dukungan Service Worker untuk caching aset statis dan navigasi saat luring (*offline support*).
+* Manifest standar untuk pengalaman instalasi aplikasi seluler (*standalone mobile display*).
+
+#### 8. CI/CD & Quality Assurance
+* Pengujian unit lengkap dengan **Vitest** (71 tests terlewati) untuk menguji utilitas, caching, hooks, dan skema validasi data.
+* Dukungan TypeScript progresif untuk keamanan tipe data (*type safety*).
+
+---
+
+### Tech Stack
+
+| Teknologi | Peran | Alasan |
+|---|---|---|
+| **Next.js 15 (App Router)** | Framework | SSR optimal, API route proxying, middleware, routing berbasis folder. |
+| **React 18 / 19** | Library UI | Ekosistem kuat, state management, render performatif. |
+| **TypeScript** | Bahasa | Type safety, self-documenting code, mempercepat deteksi error sebelum build. |
+| **Tailwind CSS v4** | Styling | Utility-first, rendering sangat cepat, konfigurasi CSS modern berbasis `@import`. |
+| **Better-Auth** | Authentication | Keamanan mutakhir, konfigurasi mudah, terintegrasi database. |
+| **PostgreSQL (Supabase)** | Database | Keandalan relasional, persistensi cloud terpercaya. |
+| **Drizzle ORM** | Database ORM | Type-safe query builder, migrasi database instan dan ringan. |
+| **Leaflet / React-Leaflet** | Peta | Library pemetaan open-source yang ringan untuk penanganan ribuan marker. |
+| **Vitest** | Testing | Eksekusi unit test super cepat dengan kompatibilitas Next.js modern. |
 
 ---
 
 ### Kelebihan & Kekurangan
+
 #### Kelebihan:
-- **Aesthetic Dark Theme**: Antarmuka premium modern dengan gaya glassmorphism dan transisi animasi mikro yang interaktif.
-- **Server-Side API Proxying**: Mengurangi beban kuota API eksternal dan meningkatkan keamanan endpoint melalui proxy internal Next.js App Router dengan caching 5 menit.
-- **Progressive TypeScript**: Struktur kode modular berbasis komponen yang bersih dan teratur.
-- **Responsive Layout**: Optimal untuk perangkat mobile maupun desktop.
+* **Premium Design & Micro-Animations** — Tampilan modern berbasis glassmorphism, warna harmonis, hover dinamis, dan transisi Framer Motion.
+* **Server-Side API Proxying** — Meningkatkan privasi serta efisiensi API pihak ketiga melalui proxy internal Next.js dengan cache server-side.
+* **Client & Server Cache Layer** — Penggunaan in-memory Map cache dengan TTL (5 menit server, 10 menit client) untuk respons secepat kilat.
+* **Zero Eslint & Build Errors** — Kode bersih bebas dari linting warning, menjamin kompatibilitas penuh saat kompilasi.
 
 #### Kekurangan:
-- Tergantung pada ketersediaan koneksi internet aktif untuk memuat tile peta eksternal dan data API.
+* **Ketergantungan Internet** — Membutuhkan koneksi internet aktif untuk memuat tile peta eksternal dan melacak pembaruan cuaca.
+* **Belum Mendukung Multi-bahasa** | Hanya menyediakan antarmuka dalam Bahasa Indonesia (ID) saat ini.
 
 ---
 
-### Tech Stack + Alasan
-- **Next.js 15 (App Router)**: Framework React utama untuk rendering sisi server (SSR), optimasi halaman statis, dan API routes proxy bawaan.
-- **Tailwind CSS v4 + Shadcn UI**: Sistem styling generasi terbaru yang sangat cepat dengan performa tinggi untuk membangun antarmuka premium dan responsif.
-- **Leaflet & React-Leaflet v5**: Library peta open-source yang ringan dan fleksibel untuk rendering peta radar dan satelit secara efisien di sisi browser.
-- **Better-Auth**: Solusi autentikasi modern yang aman, berfitur lengkap, dan mudah dikonfigurasi.
-- **PostgreSQL (Supabase) + Drizzle ORM**: Database relasional tangguh dengan ORM tipe aman (*type-safe*) untuk kecepatan migrasi skema data.
-- **In-Memory Cache (Map)**: Menjamin waktu respons API yang sangat cepat dengan in-memory cache TTL (5 menit di server, 10 menit di client).
+### Cara Install / Run
+
+#### Prasyarat
+* Node.js v18+
+* npm atau yarn
+* Database PostgreSQL (Supabase / lokal)
+
+#### Langkah-Langkah
+
+```bash
+# 1. Clone repositori
+git clone https://github.com/WahyutegarNugroho/Sky-Radar.git
+cd Sky-Radar
+
+# 2. Install dependensi (menggunakan legacy-peer-deps jika terjadi konflik versi)
+npm install --legacy-peer-deps
+
+# 3. Buat file .env.local di root direktori
+cp .env.example .env.local
+
+# 4. Inisialisasi migrasi database
+npx drizzle-kit generate
+npx drizzle-kit migrate
+
+# 5. Jalankan development server
+npm run dev
+# Buka http://localhost:3000
+```
 
 ---
 
-### Cara Install & Run
+### Environment Variables (.env.local)
 
-1. **Clone Repositori**:
-   ```bash
-   git clone https://github.com/WahyutegarNugroho/Sky-Radar.git
-   cd Sky-Radar
-   ```
+```env
+DATABASE_URL="postgresql://user:pass@host:6543/db?pgbouncer=true"
+DIRECT_URL="postgresql://user:pass@host:5432/db"
+BETTER_AUTH_SECRET="your-better-auth-secret-key"
+BETTER_AUTH_URL="http://localhost:3000"
+```
 
-2. **Instalasi Dependensi**:
-   Instal dengan menggunakan bendera `--legacy-peer-deps` untuk menghindari konflik versi antar paket:
-   ```bash
-   npm install --legacy-peer-deps
-   ```
+---
 
-3. **Konfigurasi Environment Variable**:
-   Buat file `.env.local` di direktori utama lalu masukkan kredensial berikut:
-   ```env
-   DATABASE_URL=your-database-url
-   DIRECT_URL=your-direct-connection-url
-   BETTER_AUTH_SECRET=your-auth-secret
-   BETTER_AUTH_URL=http://localhost:3000
-   ```
+### Scripts yang Tersedia
 
-4. **Jalankan Migrasi Database**:
-   ```bash
-   npx drizzle-kit generate
-   npx drizzle-kit migrate
-   ```
+| Script | Deskripsi |
+|---|---|
+| `npm run dev` | Menjalankan server Next.js lokal untuk pengembangan |
+| `npm run build` | Melakukan kompilasi aplikasi untuk rilis produksi |
+| `npm start` | Menjalankan server produksi yang telah di-build |
+| `npm test` | Menjalankan unit test dengan Vitest |
+| `npx drizzle-kit generate` | Membuat file migrasi SQL baru dari skema data |
+| `npx drizzle-kit migrate` | Menjalankan migrasi SQL ke database |
 
-5. **Jalankan Server Development**:
-   ```bash
-   npm run dev
-   ```
-   Aplikasi akan berjalan secara lokal di [http://localhost:3000](http://localhost:3000).
+---
 
-6. **Menjalankan Pengujian (Testing)**:
-   ```bash
-   npm test
-   ```
+### Struktur Dataset (Database Schema)
+
+* **`user`** — Informasi pengguna utama (Nama, Email, Avatar, Tanggal Pembuatan).
+* **`session`** — Manajemen sesi otentikasi aktif pengguna.
+* **`account`** — Data provider otentikasi Better-Auth.
+* **`verification`** — Token verifikasi keamanan email.
+* **`user_preferences`** — Menyimpan pengaturan kustom peta pengguna (titik pusat, level zoom, opacity radar, skema warna peta, dan konfigurasi ambang batas cuaca personal).
+* **`search_history`** — Rekaman riwayat kueri pencarian lokasi pengguna.
+* **`saved_locations`** — Data koordinat lokasi favorit (bookmark) pengguna.
+
+---
+
+### Lisensi
+MIT License — © 2026 Wahyutegar Nugroho.
