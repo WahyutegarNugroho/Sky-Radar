@@ -12,6 +12,7 @@ function ThemeToggle() {
       onClick={toggleTheme}
       variant="outline"
       size="icon"
+      title={theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}
       className="relative w-10 h-10 rounded-xl bg-white hover:bg-gray-50 border border-gray-200 dark:bg-neutral-900 dark:border-neutral-800 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 flex items-center justify-center overflow-hidden transition-colors duration-300 shadow-sm"
       aria-label="Toggle Theme"
     >

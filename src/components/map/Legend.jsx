@@ -22,7 +22,7 @@ function Legend({ layerType }) {
   const levels = layerType === 'satellite' ? cloudLevels : rainLevels;
 
   return (
-    <div className="flex flex-col gap-2 p-3 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md min-w-[160px] transition-colors duration-300">
+    <div className="flex flex-col gap-2 p-3 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl shadow-sm min-w-[160px] transition-colors duration-300">
       <span className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">{title}</span>
       <div className="flex flex-col gap-1.5">
         {levels.map((level) => (

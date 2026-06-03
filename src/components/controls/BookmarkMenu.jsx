@@ -48,17 +48,17 @@ function BookmarkMenu({ savedLocs, onNavigateTo, onSave, onDelete }) {
   };
 
   return (
-    <div className="relative" ref={menuRef}>
+    <div ref={menuRef}>
       <Button
         onClick={() => setShowMenu(!showMenu)}
         size="icon"
         className="w-10 h-10 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 shadow-sm transition-colors duration-300"
       >
-        <Bookmark className={`w-4 h-4 ${savedLocs.length > 0 ? 'fill-blue-600 text-blue-600 dark:fill-blue-400 dark:text-blue-400' : 'text-neutral-500 dark:text-neutral-400'}`} />
+        <Bookmark className={`w-4 h-4 ${savedLocs.length > 0 ? 'fill-accent-brand text-accent-brand' : 'text-neutral-500 dark:text-neutral-400'}`} />
       </Button>
 
       {showMenu && (
-        <div className="absolute top-12 right-0 w-64 p-4 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-xl flex flex-col gap-3 max-h-80 overflow-y-auto custom-scrollbar overflow-hidden transition-colors duration-300">
+        <div className="absolute top-full right-0 mt-3 w-64 p-4 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-xl flex flex-col gap-3 max-h-80 overflow-y-auto custom-scrollbar overflow-hidden transition-colors duration-300">
           <span className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">Lokasi Tersimpan</span>
 
           {savedLocs.length === 0 ? (
@@ -101,7 +101,7 @@ function BookmarkMenu({ savedLocs, onNavigateTo, onSave, onDelete }) {
               type="submit"
               disabled={saving || !newName.trim()}
               size="icon"
-              className="h-7 w-7 bg-blue-700 hover:bg-blue-800 text-white rounded-lg"
+              className="h-7 w-7 bg-accent-brand hover:brightness-110 text-white rounded-lg"
             >
               {saving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Plus className="w-3 h-3" />}
             </Button>

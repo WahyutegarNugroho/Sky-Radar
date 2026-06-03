@@ -1,33 +1,61 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Search, Loader2, MapPin, X, AlertCircle } from 'lucide-react';
+import { Search, Loader2, MapPin, X, AlertCircle, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 
-function SearchBar({ onLocationSelect }) {
+function SearchBar({ onLocationSelect, currentUser }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [searchError, setSearchError] = useState(null);
   const [hasSearched, setHasSearched] = useState(false);
+  const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
+        setShowHistory(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (currentUser && !query.trim()) {
+      fetch('/api/search-history')
+        .then((res) => (res.ok ? res.json() : []))
+        .then((data) => setHistory(Array.isArray(data) ? data : []))
+        .catch(() => {});
+    }
+  }, [currentUser, query]);
+
+  const saveSearchHistory = async (item) => {
+    if (!currentUser || !item) return;
+    try {
+      await fetch('/api/search-history', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: item.display_name.split(',')[0],
+          lat: parseFloat(item.lat),
+          lng: parseFloat(item.lon),
+        }),
+      });
+    } catch (err) { /* silent fail */ }
+  };
+
   const handleSearch = async (e) => {
     e.preventDefault();
     if (!query.trim()) return;
     setLoading(true);
     setIsOpen(true);
+    setShowHistory(false);
     setSearchError(null);
     setHasSearched(false);
     setResults([]);
@@ -51,17 +79,33 @@ function SearchBar({ onLocationSelect }) {
   const handleSelect = (item) => {
     const lat = parseFloat(item.lat);
     const lon = parseFloat(item.lon);
-    onLocationSelect([lat, lon], item.display_name.split(',')[0]);
+    onLocationSelect([lat, lon], item.display_name?.split(',')[0] || item.query || '');
     setIsOpen(false);
-    setQuery(item.display_name.split(',')[0]);
+    setShowHistory(false);
+    setQuery(item.display_name?.split(',')[0] || item.query || '');
+    saveSearchHistory(item);
+  };
+
+  const handleHistorySelect = (item) => {
+    onLocationSelect([item.lat, item.lng], item.query);
+    setIsOpen(false);
+    setShowHistory(false);
+    setQuery(item.query);
   };
 
   const handleClear = () => {
     setQuery('');
     setResults([]);
     setIsOpen(false);
+    setShowHistory(false);
     setSearchError(null);
     setHasSearched(false);
+  };
+
+  const handleFocus = () => {
+    if (!query.trim() && currentUser && history.length > 0) {
+      setShowHistory(true);
+    }
   };
 
   return (
@@ -73,6 +117,7 @@ function SearchBar({ onLocationSelect }) {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onFocus={handleFocus}
             placeholder="Cari lokasi..."
             className="w-full bg-transparent border-none outline-none text-xs text-neutral-800 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 py-2"
           />
@@ -90,24 +135,53 @@ function SearchBar({ onLocationSelect }) {
           type="submit"
           disabled={loading || !query.trim()}
           size="sm"
-          className="h-8 bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold px-3 rounded-lg"
+          className="h-8 bg-accent-brand hover:brightness-110 text-white text-xs font-semibold px-3 rounded-lg"
         >
           {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Cari'}
         </Button>
       </form>
 
       <AnimatePresence>
+        {showHistory && !query.trim() && (
+          <motion.div
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 5 }}
+            transition={{ duration: 0.15 }}
+            className="absolute top-12 left-0 right-0 z-[1300] bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-xl shadow-lg overflow-hidden transition-colors duration-300"
+          >
+            <div className="px-3 py-2 text-[10px] text-neutral-400 dark:text-neutral-500 font-medium">Pencarian Terakhir</div>
+            {history.length === 0 ? (
+              <div className="px-3 py-3 text-xs text-neutral-400 text-center">Belum ada riwayat pencarian.</div>
+            ) : (
+              <div className="flex flex-col pb-1 max-h-48 overflow-y-auto custom-scrollbar">
+                {history.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleHistorySelect(item)}
+                    className="flex items-center gap-2.5 px-3 py-2 hover:bg-gray-50 dark:hover:bg-neutral-800 text-left transition-colors"
+                  >
+                    <Clock className="w-3.5 h-3.5 text-neutral-400 shrink-0" />
+                    <span className="text-xs text-neutral-700 dark:text-neutral-300 truncate">{item.query}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 5 }}
             transition={{ duration: 0.15 }}
-            className="absolute top-12 left-0 right-0 z-[1100] bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-xl shadow-lg max-h-60 overflow-y-auto custom-scrollbar overflow-hidden transition-colors duration-300"
+            className="absolute top-12 left-0 right-0 z-[1300] bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-xl shadow-lg max-h-60 overflow-y-auto custom-scrollbar overflow-hidden transition-colors duration-300"
           >
             {loading && (
               <div className="flex items-center justify-center gap-2 p-4 text-neutral-400 text-xs">
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-700 dark:text-blue-400" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-accent-brand" />
                 <span>Mencari lokasi...</span>
               </div>
             )}
@@ -131,7 +205,7 @@ function SearchBar({ onLocationSelect }) {
                     onClick={() => handleSelect(item)}
                     className="flex items-start gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-neutral-800 text-left transition-colors group"
                   >
-                    <MapPin className="w-4 h-4 text-neutral-400 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                    <MapPin className="w-4 h-4 text-neutral-400 shrink-0 mt-0.5" />
                     <div className="flex flex-col gap-0.5 min-w-0">
                       <span className="text-xs font-medium text-neutral-800 dark:text-neutral-200 truncate">
                         {item.display_name.split(',')[0]}
@@ -151,6 +225,7 @@ function SearchBar({ onLocationSelect }) {
 
 SearchBar.propTypes = {
   onLocationSelect: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
 };
 
 export default SearchBar;

@@ -15,6 +15,13 @@
       "when": 1780331016033,
       "tag": "0001_certain_malcolm_colcord",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780526656711,
+      "tag": "0002_narrow_trauma",
+      "breakpoints": true
     }
   ]
 }

@@ -8,17 +8,17 @@ function OpacitySlider() {
   const percentage = Math.round(opacity * 100);
 
   return (
-    <div className="flex flex-col gap-2 p-4 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md min-w-[200px] transition-colors duration-300">
+    <div className="flex flex-col gap-2 p-4 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl shadow-sm min-w-[200px] transition-colors duration-300">
       <div className="flex items-center justify-between text-xs text-neutral-400 dark:text-neutral-500">
         <div className="flex items-center gap-1.5">
           {percentage === 0 ? (
             <EyeOff className="w-3.5 h-3.5 text-neutral-400 dark:text-neutral-500" />
           ) : (
-            <Eye className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+            <Eye className="w-3.5 h-3.5 text-accent-brand" />
           )}
           <span className="font-medium text-neutral-600 dark:text-neutral-300">Transparansi Radar</span>
         </div>
-        <span className="font-mono text-xs text-blue-600 dark:text-blue-400 font-medium">{percentage}%</span>
+        <span className="font-mono text-xs text-accent-brand font-medium">{percentage}%</span>
       </div>
       <div className="py-1">
         <Slider

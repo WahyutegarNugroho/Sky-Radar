@@ -11,7 +11,7 @@ function getDayName(dateStr) {
 }
 
 // Helper to get weather icon
-function getWeatherIcon(code, sizeClass = 'w-4.5 h-4.5') {
+function getWeatherIcon(code, sizeClass = 'w-4 h-4') {
   if (code === 0 || code === 1) return <Sun className={`${sizeClass} text-amber-500`} />;
   if (code === 2 || code === 3) return <Cloud className={`${sizeClass} text-neutral-400`} />;
   if (code >= 51 && code <= 55) return <CloudDrizzle className={`${sizeClass} text-sky-400`} />;
@@ -65,17 +65,20 @@ function LandingPage({ onGuestAccess, onLoginClick, onRegisterClick }) {
   }
 
   // Daily Forecast Mapping
+  const fallbackForecast = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    return {
+      time: d.toISOString().split('T')[0],
+      weather_code: [0, 1, 51, 61, 80, 1, 0][i],
+      temp_min: [24, 23, 22, 21, 21, 23, 25][i],
+      temp_max: [32, 31, 29, 27, 26, 30, 33][i],
+      precip_sum: [10, 20, 40, 85, 90, 15, 5][i],
+    };
+  });
   const dailyForecast = weather?.daily && weather.daily.length > 0
     ? weather.daily.slice(0, 7)
-    : [
-        { time: '2026-06-01', weather_code: 0, temp_min: 24, temp_max: 32, precip_sum: 10 },
-        { time: '2026-06-02', weather_code: 1, temp_min: 23, temp_max: 31, precip_sum: 20 },
-        { time: '2026-06-03', weather_code: 51, temp_min: 22, temp_max: 29, precip_sum: 40 },
-        { time: '2026-06-04', weather_code: 61, temp_min: 21, temp_max: 27, precip_sum: 85 },
-        { time: '2026-06-05', weather_code: 80, temp_min: 21, temp_max: 26, precip_sum: 90 },
-        { time: '2026-06-06', weather_code: 1, temp_min: 23, temp_max: 30, precip_sum: 15 },
-        { time: '2026-06-07', weather_code: 0, temp_min: 25, temp_max: 33, precip_sum: 5 },
-      ];
+    : fallbackForecast;
 
   // Weather Trends calculations (using max & min temp of the week for double line chart)
   const maxVals = dailyForecast.map(d => d.temp_max);
@@ -126,7 +129,7 @@ function LandingPage({ onGuestAccess, onLoginClick, onRegisterClick }) {
             <div className="flex flex-col gap-4">
               <div className="inline-flex items-center gap-2 bg-neutral-900/60 border border-white/10 rounded-full px-4.5 py-2 w-max backdrop-blur-md">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-neutral-300">Live Radar & Satelit Cuaca</span>
+                <span className="label-tiny text-neutral-300">Live Radar & Satelit Cuaca</span>
               </div>
               
               <div className="flex flex-col gap-2.5">
@@ -146,40 +149,40 @@ function LandingPage({ onGuestAccess, onLoginClick, onRegisterClick }) {
             {/* 4 Grid Boxes */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
               <div className="bg-white/3 backdrop-blur-md border border-white/8 rounded-2xl p-5 flex flex-col gap-3.5 hover:bg-white/5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer group hover:border-white/15 hover:shadow-lg hover:shadow-black/20">
-                <span className="text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Radar Curah Hujan</span>
+                <span className="label-tiny text-neutral-400">Radar Curah Hujan</span>
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-xl">
-                    <CloudRain className="w-4.5 h-4.5 text-blue-400" />
+                    <CloudRain className="w-4 h-4 text-blue-400" />
                   </div>
                   <span className="text-xs font-semibold text-neutral-200 group-hover:text-white transition-colors">RainViewer Live</span>
                 </div>
               </div>
 
               <div className="bg-white/3 backdrop-blur-md border border-white/8 rounded-2xl p-5 flex flex-col gap-3.5 hover:bg-white/5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer group hover:border-white/15 hover:shadow-lg hover:shadow-black/20">
-                <span className="text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Citra Satelit</span>
+                <span className="label-tiny text-neutral-400">Citra Satelit</span>
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-xl">
-                    <RefreshCw className="w-4.5 h-4.5 text-blue-400 animate-spin-slow" />
+                    <RefreshCw className="w-4 h-4 text-blue-400" />
                   </div>
                   <span className="text-xs font-semibold text-neutral-200 group-hover:text-white transition-colors">Himawari-9 (NASA)</span>
                 </div>
               </div>
 
               <div className="bg-white/3 backdrop-blur-md border border-white/8 rounded-2xl p-5 flex flex-col gap-3.5 hover:bg-white/5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer group hover:border-white/15 hover:shadow-lg hover:shadow-black/20">
-                <span className="text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Prakiraan Cuaca & AQI</span>
+                <span className="label-tiny text-neutral-400">Prakiraan Cuaca & AQI</span>
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-xl">
-                    <Sun className="w-4.5 h-4.5 text-blue-400" />
+                    <Sun className="w-4 h-4 text-blue-400" />
                   </div>
                   <span className="text-xs font-semibold text-neutral-200 group-hover:text-white transition-colors">Open-Meteo Metrics</span>
                 </div>
               </div>
 
               <div className="bg-white/3 backdrop-blur-md border border-white/8 rounded-2xl p-5 flex flex-col gap-3.5 hover:bg-white/5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer group hover:border-white/15 hover:shadow-lg hover:shadow-black/20">
-                <span className="text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">Bookmark Lokasi</span>
+                <span className="label-tiny text-neutral-400">Bookmark Lokasi</span>
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-blue-500/10 rounded-xl">
-                    <MapPin className="w-4.5 h-4.5 text-blue-400" />
+                    <MapPin className="w-4 h-4 text-blue-400" />
                   </div>
                   <span className="text-xs font-semibold text-neutral-200 group-hover:text-white transition-colors">Simpan & Sinkron</span>
                 </div>
@@ -199,13 +202,13 @@ function LandingPage({ onGuestAccess, onLoginClick, onRegisterClick }) {
             <div className="flex flex-col gap-3.5">
               <button
                 onClick={onLoginClick}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white h-11.5 font-bold text-xs rounded-xl transition-all shadow-lg hover:shadow-blue-600/20 active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full bg-accent-brand hover:brightness-110 text-white h-11 font-bold text-xs rounded-xl transition-all shadow-lg hover:shadow-accent-brand/20 active:scale-98 cursor-pointer flex items-center justify-center gap-2"
               >
                 Masuk ke Akun
               </button>
               <button
                 onClick={onRegisterClick}
-                className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 h-11.5 font-bold text-xs rounded-xl transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 h-11 font-bold text-xs rounded-xl transition-all active:scale-98 cursor-pointer flex items-center justify-center gap-2"
               >
                 Daftar Baru
               </button>
@@ -218,7 +221,7 @@ function LandingPage({ onGuestAccess, onLoginClick, onRegisterClick }) {
               
               <button
                 onClick={onGuestAccess}
-                className="w-full h-11.5 border border-white/10 hover:bg-white/5 text-neutral-300 text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                className="w-full h-11 border border-white/10 hover:bg-white/5 text-neutral-300 text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 cursor-pointer active:scale-98"
               >
                 <Compass className="w-4 h-4 text-neutral-400" />
                 Eksplorasi Peta Tanpa Login
@@ -243,52 +246,63 @@ function LandingPage({ onGuestAccess, onLoginClick, onRegisterClick }) {
               {loading ? (
                 <RefreshCw className="w-3.5 h-3.5 text-blue-400 animate-spin" />
               ) : (
-                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-blue-500"></span>
               )}
               <MapPin className="w-3.5 h-3.5 text-blue-400" />
               <span className="font-mono text-xs font-semibold text-neutral-200">Jakarta, ID</span>
             </div>
           </div>
 
-          {/* Live Satellite Feed Visualization Box */}
-          <div className="bg-white/3 backdrop-blur-md border border-white/8 rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden group shadow-lg shadow-black/10">
-            <div className="flex justify-between items-center z-10 relative">
+          {/* Live Data: Himawari-9 Satellite + Weather Metrics */}
+          <div className="bg-neutral-900/60 border border-neutral-800 rounded-2xl p-6 flex flex-col gap-5 shadow-lg shadow-black/10">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <RefreshCw className="w-4 h-4 text-neutral-400 animate-spin-slow" />
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-neutral-300">Live Satellite Feed</span>
+                <RefreshCw className="w-4 h-4 text-blue-400" />
+                <span className="label-tiny text-neutral-400">Satelit Himawari-9 / Jakarta</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.7)]"></span>
-                <span className="font-mono text-[10px] text-red-500 font-bold tracking-wider">REC</span>
+              <div className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 px-2.5 py-1 rounded-lg">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span className="font-mono text-[10px] text-emerald-400 font-semibold">LIVE</span>
               </div>
             </div>
 
-            <div className="h-64 w-full bg-neutral-950 rounded-xl relative overflow-hidden border border-white/10">
-              {/* Map background simulation (Esri World Satellite view of Jakarta) */}
-              <div className="absolute inset-0 bg-[url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=106.75,-6.25,106.95,-6.15&bboxSR=4326&imageSR=4326&size=800,500&format=jpg&f=image')] bg-cover bg-center opacity-50 mix-blend-luminosity grayscale"></div>
-              {/* Precipitation layers */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-red-500/20 opacity-60 mix-blend-overlay blur-sm"></div>
-              
-              {/* Radar grid */}
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-              <div className="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/5 scale-50"></div>
-              <div className="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/5 scale-75"></div>
-              <div className="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/5 scale-100"></div>
-              <div className="absolute top-1/2 left-0 w-full h-px bg-white/5"></div>
-              <div className="absolute top-0 left-1/2 w-px h-full bg-white/5"></div>
-              
-              {/* Jakarta Target Crosshair */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1.5 z-20">
-                <div className="relative flex items-center justify-center">
-                  <div className="absolute w-8 h-8 rounded-full border border-blue-400 animate-ping opacity-60"></div>
-                  <div className="absolute w-5 h-5 rounded-full border border-blue-400/50"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.9)] animate-pulse"></div>
-                </div>
-                <div className="bg-neutral-900/90 border border-white/10 px-2 py-0.5 rounded text-[8px] font-mono text-emerald-400 backdrop-blur-xs flex flex-col items-center select-none pointer-events-none">
-                  <span className="font-bold">Jakarta, ID</span>
-                  <span className="text-[7px] text-neutral-400 font-normal">6.2088° S, 106.8456° E</span>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="bg-neutral-950 border border-neutral-800 rounded-xl p-3.5 flex flex-col gap-1.5">
+                <span className="text-[10px] text-neutral-500 font-medium">Suhu</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl font-bold text-white font-mono tabular-nums">{currentTemp}</span>
+                  <span className="text-xs text-neutral-400 font-mono">°C</span>
                 </div>
               </div>
+              <div className="bg-neutral-950 border border-neutral-800 rounded-xl p-3.5 flex flex-col gap-1.5">
+                <span className="text-[10px] text-neutral-500 font-medium">Kelembaban</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl font-bold text-white font-mono tabular-nums">{currentHum}</span>
+                  <span className="text-xs text-neutral-400 font-mono">%</span>
+                </div>
+              </div>
+              <div className="bg-neutral-950 border border-neutral-800 rounded-xl p-3.5 flex flex-col gap-1.5">
+                <span className="text-[10px] text-neutral-500 font-medium">Angin</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl font-bold text-white font-mono tabular-nums">{currentWindSpeed}</span>
+                  <span className="text-xs text-neutral-400 font-mono">km/h</span>
+                </div>
+                <span className="text-[10px] text-neutral-500 font-mono">{currentWindDir}</span>
+              </div>
+              <div className="bg-neutral-950 border border-neutral-800 rounded-xl p-3.5 flex flex-col gap-1.5">
+                <span className="text-[10px] text-neutral-500 font-medium">Kualitas Udara</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl font-bold text-white font-mono tabular-nums">{currentAQI}</span>
+                  <span className="text-xs text-neutral-400 font-mono">AQI</span>
+                </div>
+                <span className={"text-[10px] font-mono font-semibold " + aqiColor}>{aqiLabel}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 text-[10px] text-neutral-600">
+              <span>Data real-time dari Open-Meteo</span>
+              <span className="w-1 h-1 rounded-full bg-neutral-700"></span>
+              <span>Citra satelit Himawari-9 (NASA GIBS)</span>
             </div>
           </div>
 
@@ -332,7 +346,7 @@ function LandingPage({ onGuestAccess, onLoginClick, onRegisterClick }) {
             <div className="bg-white/3 backdrop-blur-md border border-white/8 rounded-2xl p-5.5 flex flex-col gap-4 shadow-lg shadow-black/10">
               <div className="flex items-center gap-2">
                 <Wind className="w-4 h-4 text-neutral-400" />
-                <span className="text-[10px] uppercase tracking-wider font-semibold text-neutral-300">Wind & AQI Telemetry</span>
+                <span className="label-tiny text-neutral-300">Wind & AQI Telemetry</span>
               </div>
 
               <div className="flex flex-col gap-3.5 justify-center flex-1">
@@ -385,14 +399,14 @@ function LandingPage({ onGuestAccess, onLoginClick, onRegisterClick }) {
           {/* 7-Day Forecast */}
           <div className="bg-white/3 backdrop-blur-md border border-white/8 rounded-2xl p-5.5 flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-neutral-300">7-Day Forecast</span>
+              <span className="label-tiny text-neutral-300">7-Day Forecast</span>
             </div>
             
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
               {dailyForecast.map((item, idx) => (
                 <div key={idx} className="bg-neutral-900/40 p-2.5 border border-white/5 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-neutral-900/60 transition-colors">
                   <span className="text-[9px] text-neutral-400 font-semibold">{getDayName(item.time)}</span>
-                  {getWeatherIcon(item.weather_code, 'w-4.5 h-4.5')}
+                  {getWeatherIcon(item.weather_code, 'w-4 h-4')}
                   <div className="flex flex-col items-center text-center">
                     <span className="text-[8px] font-mono text-sky-400 font-medium">
                       {item.precip_sum ? `${Math.round(item.precip_sum)}mm` : '0mm'}

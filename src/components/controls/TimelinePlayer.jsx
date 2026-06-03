@@ -22,13 +22,13 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-750 rounded-xl">
-            <Clock className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <Clock className="w-4 h-4 text-accent-brand" />
             <span className="text-sm font-medium font-mono tracking-wide text-neutral-800 dark:text-neutral-200">{formatDateTime(activeFrame?.time)}</span>
           </div>
           <span className={`text-xs font-medium px-2 py-1 rounded-lg ${
             isForecast
               ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 dark:border-emerald-900/30'
-              : 'bg-blue-500/10 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-500/20 dark:border-blue-900/30'
+              : 'bg-accent-brand/10 text-accent-brand border border-accent-brand/20'
           }`}>
             {isForecast ? 'Prakiraan' : 'Data Historis'}
           </span>
@@ -66,7 +66,7 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
           className={`h-14 w-14 rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95 duration-200 ${
             isPlaying
               ? 'bg-gray-100 text-neutral-900 hover:bg-gray-200 border border-gray-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:border-neutral-700'
-              : 'bg-blue-700 text-white hover:bg-blue-800'
+              : 'bg-accent-brand text-white hover:brightness-110'
           }`}
         >
           {isPlaying ? (

@@ -16,7 +16,7 @@ const slides = [
     description: 'Kartu cuaca menampilkan suhu, kelembaban, kecepatan angin, dan prakiraan 7 hari. Data bersumber dari Open-Meteo dan BMKG.',
   },
   {
-    icon: <Layers className="w-10 h-10 text-blue-700" />,
+    icon: <Layers className="w-10 h-10 text-accent-brand" />,
     title: 'Lapisan Radar',
     description: 'Gunakan kontrol lapisan untuk mengaktifkan radar cuaca, mengubah gaya peta, transparansi, dan skema warna sesuai preferensi Anda.',
   },
@@ -83,7 +83,7 @@ export default function OnboardingOverlay({ open, onClose }) {
                   <div
                     key={idx}
                     className={`h-1.5 transition-all duration-300 ${
-                      idx === slide ? 'w-4 bg-blue-700' : 'w-1.5 bg-gray-300'
+                      idx === slide ? 'w-4 bg-accent-brand' : 'w-1.5 bg-gray-300'
                     }`}
                   />
                 ))}
@@ -101,7 +101,7 @@ export default function OnboardingOverlay({ open, onClose }) {
                 )}
                 <button
                   onClick={next}
-                  className="flex items-center gap-1 px-4 py-1.5 bg-blue-700 hover:bg-blue-800 text-xs font-medium text-white transition-colors"
+                  className="flex items-center gap-1 px-4 py-1.5 bg-accent-brand hover:brightness-110 text-xs font-medium text-white transition-colors"
                 >
                   {slide < slides.length - 1 ? 'Lanjut' : 'Mulai'}
                   <ChevronRight className="w-3 h-3" />

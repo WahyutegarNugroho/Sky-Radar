@@ -50,7 +50,7 @@ function AuthModal({ onAuthSuccess }) {
     return (
       <div className="flex items-center gap-3 bg-white border border-gray-100 dark:bg-neutral-900 dark:border-neutral-800 rounded-xl shadow-sm pointer-events-auto overflow-hidden transition-colors duration-300">
         <div className="flex items-center gap-2 pl-3 pr-1">
-          <div className="w-6 h-6 bg-blue-50 border border-blue-500/30 dark:bg-blue-950/40 dark:border-blue-900/30 flex items-center justify-center text-blue-700 dark:text-blue-400 rounded-lg">
+          <div className="w-6 h-6 bg-accent-brand/10 border border-accent-brand/20 flex items-center justify-center text-accent-brand rounded-lg">
             <User className="w-3.5 h-3.5" />
           </div>
           <span className="text-xs font-medium text-neutral-800 dark:text-neutral-200 line-clamp-1 max-w-[100px]">{user.name}</span>
@@ -76,8 +76,9 @@ function AuthModal({ onAuthSuccess }) {
     <Dialog open={isOpen} onOpenChange={(open) => { setIsOpen(open); form.reset(); }}>
       <DialogTrigger asChild>
         <Button
+          onClick={() => setIsOpen(true)}
           size="sm"
-          className="bg-blue-700 hover:bg-blue-800 text-white h-10 px-4 font-medium text-xs pointer-events-auto rounded-xl shadow-sm"
+          className="bg-accent-brand hover:brightness-110 text-white h-10 px-4 font-medium text-xs pointer-events-auto rounded-xl shadow-sm"
         >
           <LogIn className="w-3.5 h-3.5" />
           Masuk
@@ -126,7 +127,7 @@ function AuthModal({ onAuthSuccess }) {
           {form.isSignUp && (
             <div className="flex flex-col gap-1.5">
               <label className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">Nama Lengkap</label>
-              <div className="flex items-center gap-2.5 px-3 py-2.5 bg-gray-50 dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 focus-within:border-blue-700/50 dark:focus-within:border-blue-500/50 transition-colors rounded-xl">
+              <div className="flex items-center gap-2.5 px-3 py-2.5 bg-gray-50 dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 focus-within:border-accent-brand/50 transition-colors rounded-xl">
                 <User className="w-4 h-4 text-neutral-400 dark:text-neutral-500 shrink-0" />
                 <input
                   type="text"
@@ -141,7 +142,7 @@ function AuthModal({ onAuthSuccess }) {
           )}
           <div className="flex flex-col gap-1.5">
             <label className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">Alamat Email</label>
-            <div className="flex items-center gap-2.5 px-3 py-2.5 bg-gray-50 dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 focus-within:border-blue-700/50 dark:focus-within:border-blue-500/50 transition-colors rounded-xl">
+            <div className="flex items-center gap-2.5 px-3 py-2.5 bg-gray-50 dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 focus-within:border-accent-brand/50 transition-colors rounded-xl">
               <Mail className="w-4 h-4 text-neutral-400 dark:text-neutral-500 shrink-0" />
               <input
                 type="email"
@@ -155,7 +156,7 @@ function AuthModal({ onAuthSuccess }) {
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">Password</label>
-            <div className="flex items-center gap-2.5 px-3 py-2.5 bg-gray-50 dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 focus-within:border-blue-700/50 dark:focus-within:border-blue-500/50 transition-colors rounded-xl">
+            <div className="flex items-center gap-2.5 px-3 py-2.5 bg-gray-50 dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 focus-within:border-accent-brand/50 transition-colors rounded-xl">
               <Lock className="w-4 h-4 text-neutral-400 dark:text-neutral-500 shrink-0" />
               <input
                 type="password"
@@ -170,7 +171,7 @@ function AuthModal({ onAuthSuccess }) {
           <Button
             type="submit"
             disabled={form.loading}
-            className="w-full bg-blue-700 hover:bg-blue-800 text-white h-10 font-medium text-xs mt-2 rounded-xl"
+            className="w-full bg-accent-brand hover:brightness-110 text-white h-10 font-medium text-xs mt-2 rounded-xl"
           >
             {form.loading ? (
               <Loader2 className="w-4 h-4 animate-spin" />

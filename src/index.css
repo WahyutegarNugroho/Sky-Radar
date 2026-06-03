@@ -4,6 +4,31 @@
 @import "@fontsource-variable/inter";
 @import "leaflet/dist/leaflet.css";
 
+/* ============================== */
+/* Z-INDEX LAYER HIERARCHY        */
+/* Tailwind v4 @theme inline      */
+/* does NOT generate z-* utility  */
+/* classes. All z-index values    */
+/* use arbitrary z-[N] syntax.    */
+/*                                */
+/* Layer 0 (z-0):     MapView     */
+/* Layer 1 (z-1100):  Controls    */
+/*   - Top panel                  */
+/*   - GeoLocation button         */
+/*   - Weather card               */
+/*   - Timeline player            */
+/*   - Bottom control panel       */
+/* Layer 2 (z-1200):  Toasts      */
+/*   - Error banners              */
+/* Layer 3 (z-1300):  Dropdowns   */
+/*   - Search results             */
+/*   - Bookmark menu              */
+/*   - Color scheme picker panel  */
+/* Layer 4 (z-9999):  Overlays    */
+/*   - Onboarding overlay         */
+/*   - Auth dialog modal          */
+/* ============================== */
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -47,6 +72,12 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --color-accent-brand: var(--accent-brand);
+  --color-accent-weather: var(--accent-weather);
+  --color-surface-card: var(--surface-card);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
 }
 
 :root {
@@ -82,6 +113,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --accent-brand: oklch(0.52 0.18 260);
+  --accent-weather: oklch(0.7 0.15 80);
+  --surface-card: oklch(1 0 0);
+  --surface-elevated: oklch(0.97 0 0);
+  --text-primary: oklch(0.15 0 0);
+  --text-secondary: oklch(0.45 0 0);
 }
 
 .dark {
@@ -103,6 +140,12 @@
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
   --ring: oklch(0.439 0 0);
+  --accent-brand: oklch(0.55 0.2 260);
+  --accent-weather: oklch(0.7 0.15 80);
+  --surface-card: oklch(0.2 0 0);
+  --surface-elevated: oklch(0.25 0 0);
+  --text-primary: oklch(0.95 0 0);
+  --text-secondary: oklch(0.6 0 0);
 }
 
 @layer base {
@@ -112,6 +155,12 @@
 }
 
 @layer utilities {
+  .label-tiny {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+  }
   .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
   .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
   .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 2px; }
@@ -124,4 +173,37 @@
   .leaflet-control-zoom { display: none; }
   .leaflet-bottom.leaflet-right { bottom: 80px; }
   .leaflet-container { -webkit-tap-highlight-color: transparent; }
+}
+
+/* ============================================================ */
+/* Leaflet Popup Dark/Light Mode Styling                        */
+/* ============================================================ */
+.leaflet-popup-content-wrapper {
+  background-color: #ffffff !important;
+  color: #171717 !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+}
+.leaflet-popup-tip {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+}
+.leaflet-popup-close-button {
+  color: #737373 !important;
+  padding: 6px 8px 0 0 !important;
+}
+
+.dark .leaflet-popup-content-wrapper {
+  background-color: #171717 !important;
+  color: #f5f5f5 !important;
+  border: 1px solid #262626 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2) !important;
+}
+.dark .leaflet-popup-tip {
+  background-color: #171717 !important;
+  border: 1px solid #262626 !important;
+}
+.dark .leaflet-popup-close-button {
+  color: #a3a3a3 !important;
 }

@@ -92,7 +92,7 @@ function RegisterPage({ onAuthSuccess, onBack, onLoginClick, onGuestAccess }) {
           <Button
             type="submit"
             disabled={form.loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white h-10 font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer mt-2 rounded-xl transition-all shadow-md active:scale-98"
+            className="w-full bg-accent-brand hover:brightness-110 text-white h-10 font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer mt-2 rounded-xl transition-all shadow-md active:scale-98"
           >
             {form.loading ? (
               <Loader2 className="w-4 h-4 animate-spin" />

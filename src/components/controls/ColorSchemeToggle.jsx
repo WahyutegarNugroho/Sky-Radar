@@ -26,7 +26,7 @@ function ColorSchemeToggle() {
         variant="outline"
         className="flex items-center gap-2 bg-white hover:bg-gray-50 text-neutral-800 border border-gray-200 dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-800 h-10 px-4 pointer-events-auto rounded-xl shadow-sm transition-colors duration-300"
       >
-        <Settings className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+        <Settings className="w-4 h-4 text-accent-brand" />
         <span className="text-xs font-medium">{layerType === 'radar' ? activeScheme.name : 'Satelit'}</span>
       </Button>
 
@@ -48,7 +48,7 @@ function ColorSchemeToggle() {
                   variant={mapStyle === 'dark' ? 'default' : 'outline'}
                   className={`flex items-center justify-center gap-1 h-8 text-xs font-medium rounded-lg ${
                     mapStyle === 'dark'
-                      ? 'bg-blue-700 text-white hover:bg-blue-800'
+                      ? 'bg-accent-brand text-white hover:brightness-110'
                       : 'border border-gray-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400'
                   }`}
                 >
@@ -61,7 +61,7 @@ function ColorSchemeToggle() {
                   variant={mapStyle === 'light' ? 'default' : 'outline'}
                   className={`flex items-center justify-center gap-1 h-8 text-xs font-medium rounded-lg ${
                     mapStyle === 'light'
-                      ? 'bg-blue-700 text-white hover:bg-blue-800'
+                      ? 'bg-accent-brand text-white hover:brightness-110'
                       : 'border border-gray-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400'
                   }`}
                 >
@@ -74,7 +74,7 @@ function ColorSchemeToggle() {
                   variant={mapStyle === 'satellite' ? 'default' : 'outline'}
                   className={`flex items-center justify-center gap-1 h-8 text-xs font-medium rounded-lg ${
                     mapStyle === 'satellite'
-                      ? 'bg-blue-700 text-white hover:bg-blue-800'
+                      ? 'bg-accent-brand text-white hover:brightness-110'
                       : 'border border-gray-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400'
                   }`}
                 >
@@ -93,7 +93,7 @@ function ColorSchemeToggle() {
                   variant={layerType === 'radar' ? 'default' : 'outline'}
                   className={`flex items-center justify-center h-8 text-xs font-medium rounded-lg ${
                     layerType === 'radar'
-                      ? 'bg-blue-700 text-white hover:bg-blue-800'
+                      ? 'bg-accent-brand text-white hover:brightness-110'
                       : 'border border-gray-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400'
                   }`}
                 >
@@ -105,7 +105,7 @@ function ColorSchemeToggle() {
                   variant={layerType === 'satellite' ? 'default' : 'outline'}
                   className={`flex items-center justify-center h-8 text-xs font-medium rounded-lg ${
                     layerType === 'satellite'
-                      ? 'bg-blue-700 text-white hover:bg-blue-800'
+                      ? 'bg-accent-brand text-white hover:brightness-110'
                       : 'border border-gray-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400'
                   }`}
                 >
@@ -124,7 +124,7 @@ function ColorSchemeToggle() {
                       onClick={() => { setColorSchemeId(scheme.id); }}
                       className={`flex items-center gap-2 px-2.5 py-2 text-xs transition-colors rounded-lg w-full ${
                         Number(colorSchemeId) === scheme.id
-                          ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border border-blue-500/30 dark:border-blue-900/30'
+                          ? 'bg-accent-brand/10 text-accent-brand border border-accent-brand/20'
                           : 'hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border border-transparent'
                       }`}
                     >
