@@ -1,0 +1,5 @@
+export function getWindDirection(deg: number): string { const directions = ['Utara', 'Timur Laut', 'Timur', 'Tenggara', 'Selatan', 'Barat Daya', 'Barat', 'Barat Laut']; const index = Math.round(deg / 45) % 8; return directions[index];
+} export const formatTime = (timestamp: number | null | undefined): string =>{ if (!timestamp) return ''; const date = new Date(timestamp * 1000); return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+}; export const formatDateTime = (timestamp: number | null | undefined): string =>{ if (!timestamp) return ''; const date = new Date(timestamp * 1000); const day = date.getDate().toString().padStart(2, '0'); const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des']; const month = months[date.getMonth()]; const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }); return `${day} ${month}, ${time}`;
+}; export const isFuture = (timestamp: number | null | undefined): boolean =>{ if (!timestamp) return false; return timestamp * 1000>Date.now();
+};

@@ -1,0 +1,9 @@
+import { db } from "@/db";
+import { userPreferences } from "@/db/schema";
+import { auth } from "@/lib/auth";
+import { validatePreferences } from "@/lib/validation";
+import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server"; export async function GET() { const session = await auth.api.getSession({ headers: await headers(), }); if (!session) { return NextResponse.json({ error: "Tidak terotorisasi" }, { status: 401 }); } try { const prefs = await db.query.userPreferences.findFirst({ where: eq(userPreferences.userId, session.user.id), }); return NextResponse.json(prefs || null); } catch (error) { console.error("Error fetching preferences:", error); return NextResponse.json({ error: "Internal Server Error" }, { status: 500 }); }
+} export async function POST(request) { const session = await auth.api.getSession({ headers: await headers(), }); if (!session) { return NextResponse.json({ error: "Tidak terotorisasi" }, { status: 401 }); } try { const body = await request.json(); const result = validatePreferences(body); if (!result.valid) { return NextResponse.json({ error: "Validation failed", errors: result.errors }, { status: 400 }); } const userId = session.user.id; const { data } = result; const existing = await db.query.userPreferences.findFirst({ where: eq(userPreferences.userId, userId), }); const payload = { centerLat: data.centerLat, centerLng: data.centerLng, zoom: data.zoom, opacity: data.opacity, colorScheme: data.colorScheme, mapStyle: data.mapStyle, updatedAt: new Date(), }; if (existing) { await db.update(userPreferences) .set(payload) .where(eq(userPreferences.userId, userId)); } else { await db.insert(userPreferences) .values({ id: crypto.randomUUID(), userId, ...payload, }); } return NextResponse.json({ success: true }); } catch (error) { console.error("Error saving preferences:", error); return NextResponse.json({ error: "Internal Server Error" }, { status: 500 }); }
+}

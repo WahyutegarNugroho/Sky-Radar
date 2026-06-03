@@ -1,0 +1,18 @@
+export const RAINVIEWER_API = 'https://api.rainviewer.com/public/weather-maps.json'; export const WEATHER_CODES: Record<number, string>= { 0: 'Cerah', 1: 'Umumnya cerah', 2: 'Berawan sebagian', 3: 'Berawan', 45: 'Kabut', 48: 'Kabut embun beku', 51: 'Gerimis ringan', 53: 'Gerimis sedang', 55: 'Gerimis deras', 61: 'Hujan ringan', 63: 'Hujan sedang', 65: 'Hujan deras', 71: 'Salju ringan', 73: 'Salju sedang', 75: 'Salju deras', 80: 'Hujan lokal ringan', 81: 'Hujan lokal sedang', 82: 'Hujan lokal deras', 95: 'Badai petir', 96: 'Badai petir dengan hujan es ringan', 99: 'Badai petir dengan hujan es deras',
+}; export const DEFAULT_CENTER: [number, number] = [-2.5489, 118.0149];
+export const DEFAULT_ZOOM = 5; interface TileConfig { url: string; attribution: string; maxNative: number;
+} export const MAP_TILES: Record<string, TileConfig>= { dark: { url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors &copy; <a href="https://carto.com/attributions">CARTO</a>', maxNative: 20 }, light: { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>contributors', maxNative: 19 }, satellite: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', attribution: '&copy; <a href="https://www.esri.com">Esri</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', maxNative: 19 }, satellite_label: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', attribution: '&copy; <a href="https://www.esri.com">Esri</a>', maxNative: 19 }
+}; interface ColorScheme { id: number; name: string; desc: string;
+} export const COLOR_SCHEMES: ColorScheme[] = [ { id: 1, name: 'Original', desc: 'RainViewer default colors' }, { id: 2, name: 'Universal Blue', desc: 'Slightly modified blue-focused colors' }, { id: 3, name: 'TITAN', desc: 'Severe weather focus (purple/pink)' }, { id: 4, name: 'The Weather Channel', desc: 'TWC standard colors' }, { id: 5, name: 'Meteored', desc: 'Meteored style colors' }, { id: 6, name: 'NEXRAD', desc: 'US Nexrad weather radar scheme' }, { id: 7, name: 'Rainbow', desc: 'High contrast rainbow' }, { id: 8, name: 'Dark Sky', desc: 'Darker thematic weather overlay' }
+]; export const MAP_OPTIONS = { tileSize: 256, smooth: 1, snow: 1
+}; export const RADAR_ZOOM_CONFIG = { minNative: 3, maxNative: 7, min: 1, max: 22, keepBuffer: 2,
+}; export const SATELLITE_ZOOM_CONFIG = { minNative: 1, maxNative: 6, min: 1, max: 22, keepBuffer: 2,
+}; export const HIMAWARI_TILE_URL = 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/Himawari_AHI_Band13_Clean_Infrared/default/default/GoogleMapsCompatible_Level6/{z}/{y}/{x}.png'; export const MARKER_ICON_CONFIG = { size: [25, 41] as [number, number], anchor: [12, 41] as [number, number], popupAnchor: [1, -34] as [number, number],
+}; export const GEO_ZOOM = 10;
+export const SEARCH_ZOOM = 11;
+export const MAP_MIN_ZOOM = 3; export const WEATHER_THRESHOLDS = { highWind: 40, heavyRain: 8, poorAQI: 100,
+}; export const GEOLOCATION_OPTIONS: PositionOptions = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0,
+}; export const OPEN_METEO_API = 'https://api.open-meteo.com/v1/forecast';
+export const OPEN_METEO_AQI_API = 'https://air-quality-api.open-meteo.com/v1/air-quality'; export const STORAGE_KEYS: Record<string, string>= { CENTER: 'skyradar_map_center', ZOOM: 'skyradar_last_zoom', OPACITY: 'skyradar_opacity', COLOR_SCHEME: 'skyradar_color_scheme', MAP_STYLE: 'skyradar_map_style', LAYER_TYPE: 'skyradar_layer_type', THEME: 'skyradar_theme'
+};
+

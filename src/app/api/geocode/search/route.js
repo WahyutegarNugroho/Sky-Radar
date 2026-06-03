@@ -1,0 +1,3 @@
+import { NextResponse } from 'next/server';
+import { proxyAPI } from '@/lib/api-proxy'; const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search'; export async function GET(request) { const { searchParams } = new URL(request.url); const q = searchParams.get('q'); const limit = searchParams.get('limit') || '5'; if (!q) { return NextResponse.json({ error: 'Missing query parameter' }, { status: 400 }); } const url = `${NOMINATIM_URL}?format=json&q=${encodeURIComponent(q)}&limit=${limit}`; const cacheKey = `geocode:search:${q}:${limit}`; return proxyAPI({ cacheKey, fetchUrl: url, fetchOptions: { headers: { 'User-Agent': 'SkyRadar/1.0 (weather-app)' } }, errorMessage: 'Geocoding API error', });
+}
