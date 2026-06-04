@@ -36,6 +36,10 @@ function WeatherCard({ weather, loading, error, latitude, longitude, locationNam
   }, []);
 
   useEffect(() => {
+    setIsMinimized(false);
+  }, [latitude, longitude]);
+
+  useEffect(() => {
     const offsetSeconds = weather?.utcOffsetSeconds;
     if (offsetSeconds === undefined) return;
     const updateTime = () => {
