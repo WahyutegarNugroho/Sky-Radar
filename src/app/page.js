@@ -30,7 +30,7 @@ import AlertThresholdEditor from '@/components/controls/AlertThresholdEditor';
 
 import { getRadarError, getGeoError } from '@/lib/errors';
 import { GEO_ZOOM, SEARCH_ZOOM } from '@/utils/constants';
-import { CloudRain, RefreshCw, AlertTriangle, Info, User } from 'lucide-react';
+import { CloudRain, RefreshCw, AlertTriangle, Info, User, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const MapView = dynamic(() => import('../components/map/MapView'), {
@@ -491,7 +491,7 @@ function Page() {
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Skema Warna Radar</span>
-                <ColorSchemePicker />
+                <ColorSchemePicker inline />
               </div>
               <div className="flex flex-col gap-1.5">
                 <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Transparansi Lapisan</span>

@@ -4,7 +4,7 @@ import { COLOR_SCHEMES } from '@/utils/constants';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMap } from '@/contexts/MapContext';
 
-function ColorSchemePicker() {
+function ColorSchemePicker({ inline }) {
   const { layerType, colorSchemeId, setColorSchemeId } = useMap();
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef(null);
@@ -19,6 +19,41 @@ function ColorSchemePicker() {
   }, [isOpen]);
 
   if (layerType !== 'radar') return null;
+
+  if (inline) {
+    return (
+      <div className="flex flex-col gap-2">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center justify-between w-full px-3 py-2 text-xs font-medium bg-gray-50 dark:bg-neutral-850 dark:text-neutral-200 border border-gray-100 dark:border-neutral-800 rounded-xl"
+        >
+          <div className="flex items-center gap-2">
+            <Palette className="w-3.5 h-3.5 text-accent-brand" />
+            <span>Skema Warna: <span className="font-semibold text-neutral-800 dark:text-neutral-100">{activeScheme.name}</span></span>
+          </div>
+          <span className="text-[10px] text-neutral-400">{isOpen ? 'Tutup' : 'Ubah'}</span>
+        </button>
+        {isOpen && (
+          <div className="grid grid-cols-2 gap-1.5 p-2 bg-gray-55/50 dark:bg-neutral-850/40 border border-gray-100 dark:border-neutral-800 rounded-xl">
+            {COLOR_SCHEMES.map((scheme) => (
+              <button
+                key={scheme.id}
+                onClick={() => { setColorSchemeId(scheme.id); setIsOpen(false); }}
+                className={`flex items-center gap-2 p-1.5 text-xs transition-colors rounded-lg ${
+                  Number(colorSchemeId) === scheme.id
+                    ? 'bg-accent-brand/10 text-accent-brand font-semibold'
+                    : 'hover:bg-gray-50 dark:hover:bg-neutral-850 text-neutral-600 dark:text-neutral-350'
+                }`}
+              >
+                <div className="w-3.5 h-3.5 rounded-sm border border-neutral-200 dark:border-neutral-700" style={{ background: scheme.gradient || scheme.color || '#888' }} />
+                <span className="truncate">{scheme.name}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="relative" ref={panelRef}>
