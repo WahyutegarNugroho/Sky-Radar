@@ -50,7 +50,7 @@ function Legend({ layerType, compact }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.95 }}
               transition={{ duration: 0.12 }}
-              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-[1500] p-2.5 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl shadow-xl min-w-[140px]"
+              className="absolute bottom-full left-0 mb-2 z-[1500] p-2.5 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl shadow-xl min-w-[140px]"
             >
               <span className="text-xs text-neutral-400 dark:text-neutral-300 font-medium block mb-1.5">{title}</span>
               <div className="flex flex-col gap-1">

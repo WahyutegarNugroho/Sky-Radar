@@ -295,7 +295,7 @@ function Page() {
 
       {/* GeoLocation Button */}
       {/* Desktop: top-right. Mobile: bottom-right above controls */}
-      <div className="absolute bottom-36 right-4 sm:top-4 sm:bottom-auto z-[1100] pointer-events-auto">
+      <div className="absolute bottom-[216px] right-4 sm:top-4 sm:bottom-auto z-[1100] pointer-events-auto">
         <GeoLocationButton onClick={getMyLocation} loading={geoLoading} />
       </div>
 
@@ -324,7 +324,7 @@ function Page() {
       {/* ============================================================ */}
 
       {/* Timeline Player / Radar Loading / Satellite Status */}
-      <div className="absolute bottom-20 left-4 right-4 sm:bottom-4 sm:left-[300px] sm:right-4 sm:max-w-3xl z-[1100] pointer-events-auto">
+      <div className="absolute bottom-[88px] left-4 right-4 sm:bottom-4 sm:left-[300px] sm:right-4 sm:max-w-3xl z-[1100] pointer-events-auto">
         {radarLoading && !radarData ? (
           <div className="flex items-center justify-center gap-3 p-4 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm rounded-2xl shadow-sm">
             <RefreshCw className="w-5 h-5 animate-spin text-accent-brand shrink-0" />
