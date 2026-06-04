@@ -150,4 +150,4 @@ BETTER_AUTH_URL="http://localhost:3000"
 ---
 
 ### Lisensi
-MIT License — © 2026 Wahyutegar Nugroho.
+MIT License — © 2026 whtsn-dev.
