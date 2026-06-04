@@ -192,7 +192,7 @@ function Page() {
       {/* Mobile: full width minus 68px right margin for GeoLocation   */}
       {/* Desktop: max-w-md, right margin restored                     */}
       {/* ============================================================ */}
-      <div className="absolute top-4 left-4 right-[68px] sm:right-4 sm:max-w-md z-[1100] bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border border-gray-100 dark:border-neutral-800 p-3.5 rounded-2xl shadow-lg flex flex-col gap-3 pointer-events-auto transition-colors duration-300">
+      <div className="absolute top-4 left-4 right-4 sm:max-w-md z-[1100] bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md border border-gray-100 dark:border-neutral-800 p-2.5 sm:p-3.5 rounded-2xl shadow-lg flex flex-col gap-2 sm:gap-3 pointer-events-auto transition-colors duration-300">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <CloudRain className="w-5 h-5 text-accent-brand shrink-0" />
@@ -227,7 +227,7 @@ function Page() {
       {/* Mobile: full-width, Desktop: centered                        */}
       {/* ============================================================ */}
       {radarError && (
-        <div className="absolute top-20 left-4 right-4 mx-auto max-w-md z-[1200] flex items-center gap-3 px-4 py-3 bg-red-50 border border-red-200 text-red-700 rounded-2xl shadow-md pointer-events-auto">
+        <div className="absolute top-16 left-4 right-4 mx-auto max-w-md z-[1200] flex items-center gap-3 px-3 py-2.5 bg-red-50 border border-red-200 text-red-700 rounded-2xl shadow-md pointer-events-auto">
           <AlertTriangle className="w-5 h-5 text-red-500 shrink-0" />
           <div className="flex flex-col gap-0.5 text-xs">
             <span className="font-semibold">{getRadarError(typeof radarError === 'object' ? radarError?.status : null).title}</span>
@@ -240,7 +240,7 @@ function Page() {
       )}
 
       {geoError && (
-        <div className="absolute top-[104px] left-4 right-4 mx-auto max-w-md z-[1200] flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 text-amber-700 text-xs rounded-xl shadow-sm pointer-events-auto">
+        <div className="absolute top-[80px] left-4 right-4 mx-auto max-w-md z-[1200] flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 text-amber-700 text-xs rounded-xl shadow-sm pointer-events-auto">
           <Info className="w-4 h-4 text-amber-600 shrink-0" />
           <div>
             <span className="text-xs font-semibold">{getGeoError(geoError).title}</span>
@@ -250,7 +250,7 @@ function Page() {
       )}
 
       {geoNameError && (
-        <div className="absolute top-20 left-4 right-4 mx-auto max-w-md z-[1200] flex items-center gap-2 px-3 py-2 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 text-neutral-500 text-xs rounded-xl shadow-sm pointer-events-auto">
+        <div className="absolute top-16 left-4 right-4 mx-auto max-w-md z-[1200] flex items-center gap-2 px-3 py-2 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 text-neutral-500 text-xs rounded-xl shadow-sm pointer-events-auto">
           <Info className="w-3 h-3 text-neutral-400 shrink-0" />
           <span>{geoNameError}</span>
         </div>
@@ -284,14 +284,16 @@ function Page() {
       {/* ============================================================ */}
 
       {/* GeoLocation Button */}
-      {/* Mobile: below top panel (top-20). Desktop: top-right (top-4) */}
-      <div className="absolute top-20 right-4 sm:top-4 z-[1100] pointer-events-auto">
+      {/* Desktop: top-right. Mobile: bottom-right above controls */}
+      <div className="absolute bottom-24 right-4 sm:top-4 sm:bottom-auto z-[1100] pointer-events-auto">
         <GeoLocationButton onClick={getMyLocation} loading={geoLoading} />
       </div>
 
       {/* Right Side Weather Widgets Column */}
-      {/* Mobile: full-width. Desktop: right sidebar */}
-      <div className="absolute top-36 left-4 right-4 sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] max-h-[calc(100vh-160px)] overflow-y-auto custom-scrollbar z-[1100] flex flex-col gap-3 pointer-events-auto">
+      {/* Mobile: bottom-anchored sheet. Desktop: right sidebar */}
+      <div className="absolute sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] z-[1100] flex flex-col gap-3 pointer-events-auto sm:max-h-[calc(100vh-160px)] sm:overflow-y-auto
+        bottom-0 left-0 right-0 max-h-[75vh] overflow-y-auto rounded-t-2xl bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-gray-100 dark:border-neutral-800 shadow-xl
+      ">
         <OpenMeteoCard
           weather={weather}
           loading={weatherLoading}
@@ -317,8 +319,8 @@ function Page() {
       {/* ============================================================ */}
 
       {/* Timeline Player / Radar Loading / Satellite Status */}
-      {/* Mobile: above bottom controls. Desktop: right of bottom panel */}
-      <div className="absolute bottom-[220px] left-4 right-4 sm:bottom-4 sm:left-[300px] sm:right-4 sm:max-w-3xl z-[1100] pointer-events-auto">
+      {/* Mobile: above bottom bar. Desktop: right of bottom panel */}
+      <div className="absolute bottom-28 left-4 right-4 sm:bottom-4 sm:left-[300px] sm:right-4 sm:max-w-3xl z-[1100] pointer-events-auto">
         {radarLoading && !radarData ? (
           <div className="flex items-center justify-center gap-3 p-4 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm rounded-2xl shadow-sm">
             <RefreshCw className="w-5 h-5 animate-spin text-accent-brand shrink-0" />
@@ -347,8 +349,22 @@ function Page() {
         )}
       </div>
 
-      {/* Bottom Controls Panel: MapStyle, Layer Toggle, Legend, Color Scheme, Opacity, Alerts */}
-      <div className="absolute bottom-4 left-4 right-4 sm:left-4 sm:right-auto sm:max-w-[280px] z-[1100] flex flex-col gap-2.5 pointer-events-auto">
+      {/* Bottom Controls Panel */}
+      {/* MOBILE: compact horizontal bar */}
+      <div className="sm:hidden absolute bottom-4 left-4 right-4 z-[1100] pointer-events-auto">
+        <div className="flex items-center gap-1.5 p-1.5 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md overflow-x-auto custom-scrollbar">
+          <Legend layerType={layerType} compact />
+          <MapStyleSelector compact />
+          <LayerToggle compact />
+          <ColorSchemePicker />
+          {currentUser && (
+            <AlertThresholdEditor alertConfig={alertConfig} onSave={updateAlertConfig} />
+          )}
+          <OpacitySlider compact />
+        </div>
+      </div>
+      {/* DESKTOP: vertical panel */}
+      <div className="hidden sm:flex absolute bottom-4 left-4 sm:right-auto sm:max-w-[280px] z-[1100] flex-col gap-2.5 pointer-events-auto">
         <Legend layerType={layerType} />
         <div className="flex flex-wrap items-center gap-2">
           <MapStyleSelector />

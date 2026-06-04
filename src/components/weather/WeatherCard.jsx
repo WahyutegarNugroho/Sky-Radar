@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Loader2, AlertCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import WeatherMinimized from './WeatherMinimized';
 import WeatherExpanded from './WeatherExpanded';
 import WeatherChart from './WeatherChart';
@@ -19,8 +19,10 @@ function getTheme(code) {
 
 function WeatherCard({ weather, loading, error, latitude, longitude, locationName, customThresholds }) {
   const [isMinimized, setIsMinimized] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const thresholds = customThresholds || WEATHER_THRESHOLDS;
+  useEffect(() => { const check = () => setIsMobile(window.innerWidth < 640); check(); window.addEventListener('resize', check); return () => window.removeEventListener('resize', check); }, []);
 
   useEffect(() => {
     const offsetSeconds = weather?.utcOffsetSeconds;
@@ -88,9 +90,38 @@ function WeatherCard({ weather, loading, error, latitude, longitude, locationNam
   const theme = getTheme(weather.weather_code);
 
   return (
-    <div>
+    <>
       {isMinimized ? (
         <WeatherMinimized weather={weather} onExpand={handleExpand} />
+      ) : isMobile ? (
+        <AnimatePresence>
+          <div className="fixed inset-0 bg-black/30 z-[1300]" onClick={handleMinimize} />
+          <motion.div
+            key="mobile-expanded"
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            className={`fixed bottom-0 left-0 right-0 z-[1400] max-h-[85vh] overflow-y-auto flex flex-col gap-3.5 p-4 bg-white border ${theme.border} dark:bg-neutral-900 dark:border-neutral-800 rounded-t-2xl shadow-xl bg-gradient-to-b ${theme.bg} to-transparent transition-colors duration-300 pointer-events-auto`}
+          >
+            <div className="flex justify-center mb-1">
+              <div className="w-8 h-1 bg-neutral-300 dark:bg-neutral-600 rounded-full" />
+            </div>
+            <WeatherExpanded
+              weather={weather}
+              locationName={locationName}
+              currentTime={currentTime}
+              timezoneAbbr={weather.timezoneAbbr || 'WIB'}
+              alerts={alerts}
+              onMinimize={handleMinimize}
+            />
+            {weather.hourly && <HourlyTrendChart hourly={weather.hourly} />}
+            <hr className="border-gray-100 dark:border-neutral-800/80" />
+            <WeatherChart daily={weather.daily} />
+            <hr className="border-gray-100 dark:border-neutral-800/80" />
+            <WeatherDaily daily={weather.daily} />
+          </motion.div>
+        </AnimatePresence>
       ) : (
         <motion.div
           key="expanded"
@@ -113,7 +144,7 @@ function WeatherCard({ weather, loading, error, latitude, longitude, locationNam
           <WeatherDaily daily={weather.daily} />
         </motion.div>
       )}
-    </div>
+    </>
   );
 }
 

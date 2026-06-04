@@ -43,38 +43,38 @@ function MultiLocationWeather({ weatherData, loading, onLocationClick }) {
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="flex flex-col gap-1 px-3 pb-3 max-h-60 overflow-y-auto custom-scrollbar">
-              {weatherData.map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => onLocationClick?.(item.lat, item.lng, item.name)}
-                  className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors text-left group"
-                >
-                  <div className="w-7 h-7 rounded-lg bg-accent-brand/10 flex items-center justify-center shrink-0">
-                    <MapPin className="w-3.5 h-3.5 text-accent-brand" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-xs font-medium text-neutral-800 dark:text-neutral-200 truncate leading-tight">
-                      {item.name || `Lokasi ${idx + 1}`}
+              <div className="flex flex-col gap-0.5 px-2.5 pb-2.5 max-h-52 overflow-y-auto custom-scrollbar">
+                {weatherData.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => onLocationClick?.(item.lat, item.lng, item.name)}
+                    className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors text-left group"
+                  >
+                    <div className="w-6 h-6 rounded-lg bg-accent-brand/10 flex items-center justify-center shrink-0">
+                      <MapPin className="w-3 h-3 text-accent-brand" />
                     </div>
-                    {item.loading ? (
-                      <div className="text-[10px] text-neutral-400">Memuat...</div>
-                    ) : item.error ? (
-                      <div className="text-[10px] text-red-400">{item.error}</div>
-                    ) : item.weather ? (
-                      <div className="flex items-center gap-1.5 text-[10px] text-neutral-500 dark:text-neutral-400">
-                        {getIcon(item.weather.weather_code, 'w-3 h-3')}
-                        <span className="font-semibold text-neutral-700 dark:text-neutral-300">
-                          {Math.round(item.weather.temperature_2m)}&deg;C
-                        </span>
-                        <span className="text-neutral-400">/</span>
-                        <span>{Math.round(item.weather.wind_speed_10m)} km/h</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[11px] font-medium text-neutral-800 dark:text-neutral-200 truncate leading-tight">
+                        {item.name || `Lokasi ${idx + 1}`}
                       </div>
-                    ) : null}
-                  </div>
-                </button>
-              ))}
-            </div>
+                      {item.loading ? (
+                        <div className="text-[10px] text-neutral-400">Memuat...</div>
+                      ) : item.error ? (
+                        <div className="text-[10px] text-red-400">{item.error}</div>
+                      ) : item.weather ? (
+                        <div className="flex items-center gap-1.5 text-[10px] text-neutral-500 dark:text-neutral-400">
+                          {getIcon(item.weather.weather_code, 'w-3 h-3')}
+                          <span className="font-semibold text-neutral-700 dark:text-neutral-300">
+                            {Math.round(item.weather.temperature_2m)}&deg;C
+                          </span>
+                          <span className="text-neutral-400">/</span>
+                          <span>{Math.round(item.weather.wind_speed_10m)} km/h</span>
+                        </div>
+                      ) : null}
+                    </div>
+                  </button>
+                ))}
+              </div>
           </motion.div>
         )}
       </AnimatePresence>
