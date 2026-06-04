@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { getClientCache, setClientCache } from '@/lib/client-cache';
-import { fetchWeatherData } from '@/utils/api';
 
 const DEBOUNCE_MS = 500;
 const CACHE_TTL = 600000;
@@ -37,7 +36,11 @@ export function useWeather(latitude, longitude) {
 
     timerRef.current = setTimeout(async () => {
       try {
-        const data = await fetchWeatherData(latitude, longitude, controller.signal);
+        const res = await fetch(`/api/weather?lat=${latitude}&lon=${longitude}`, {
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error(`Weather API error: ${res.status}`);
+        const data = await res.json();
         setWeather(data);
         setLoading(false);
         setClientCache(cacheKey, data, CACHE_TTL);

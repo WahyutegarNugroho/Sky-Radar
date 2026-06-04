@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { getClientCache, setClientCache } from '@/lib/client-cache';
-import { fetchWeatherData } from '@/utils/api';
 
 const CACHE_TTL = 300000;
 
@@ -49,7 +48,9 @@ export function useMultiWeather(locations) {
           const cached = getClientCache(cacheKey);
           if (cached) return { name: loc.name, lat: loc.lat, lng: loc.lng, weather: cached, loading: false, error: null };
 
-          const data = await fetchWeatherData(loc.lat, loc.lng);
+          const res = await fetch(`/api/weather?lat=${loc.lat}&lon=${loc.lng}`);
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const data = await res.json();
           setClientCache(cacheKey, data, CACHE_TTL);
           return { name: loc.name, lat: loc.lat, lng: loc.lng, weather: data, loading: false, error: null };
         })
