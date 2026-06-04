@@ -22,7 +22,18 @@ function WeatherCard({ weather, loading, error, latitude, longitude, locationNam
   const [isMobile, setIsMobile] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const thresholds = customThresholds || WEATHER_THRESHOLDS;
-  useEffect(() => { const check = () => setIsMobile(window.innerWidth < 640); check(); window.addEventListener('resize', check); return () => window.removeEventListener('resize', check); }, []);
+  useEffect(() => {
+    const check = () => {
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setIsMinimized(false);
+      }
+    };
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     const offsetSeconds = weather?.utcOffsetSeconds;

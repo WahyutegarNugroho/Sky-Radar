@@ -300,7 +300,7 @@ function Page() {
       </div>
 
       {/* Right Side Weather Widgets (Desktop Only) */}
-      <div className="hidden sm:flex absolute sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] sm:max-h-[calc(100vh-160px)] sm:overflow-y-auto flex-col gap-3 pointer-events-auto">
+      <div className="hidden sm:flex absolute sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] sm:max-h-[calc(100vh-160px)] sm:overflow-y-auto flex-col gap-3 pointer-events-auto z-[1100]">
         <OpenMeteoCard
           weather={weather}
           loading={weatherLoading}
