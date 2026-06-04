@@ -45,8 +45,8 @@ const MapView = dynamic(() => import('../components/map/MapView'), {
 function Page() {
   const [isMounted, setIsMounted] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [showMobilePanel, setShowMobilePanel] = useState(false);
-  const [showMobileSettings, setShowMobileSettings] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeMobileTab, setActiveMobileTab] = useState('weather');
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -299,41 +299,8 @@ function Page() {
         <GeoLocationButton onClick={getMyLocation} loading={geoLoading} />
       </div>
 
-      {/* Mobile Weather Info Toggle Button */}
-      <div className="absolute top-[88px] right-4 sm:hidden z-[1100] pointer-events-auto">
-        <Button
-          onClick={() => setShowMobilePanel(true)}
-          className="w-10 h-10 rounded-full bg-white/90 dark:bg-neutral-900/90 backdrop-blur border border-gray-250 dark:border-neutral-800 shadow-md flex items-center justify-center text-neutral-700 dark:text-neutral-200"
-          size="icon"
-          variant="outline"
-        >
-          <CloudRain className="w-5 h-5" />
-        </Button>
-      </div>
-
-      {/* Right Side Weather Widgets Column */}
-      {/* Mobile: Full Screen Drawer. Desktop: right sidebar */}
-      <div className={`absolute z-[1200] sm:z-[1100] sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] sm:max-h-[calc(100vh-160px)] sm:overflow-y-auto sm:flex sm:flex-col sm:gap-3 sm:pointer-events-auto
-        ${showMobilePanel
-          ? 'fixed inset-4 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md p-4.5 rounded-3xl border border-gray-150 dark:border-neutral-800 shadow-2xl overflow-y-auto flex flex-col gap-3 pointer-events-auto'
-          : 'hidden'
-        }`}
-      >
-        {/* Mobile Header and Close Button */}
-        {showMobilePanel && (
-          <div className="flex sm:hidden items-center justify-between border-b border-gray-100 dark:border-neutral-800 pb-2 mb-1">
-            <span className="text-sm font-bold text-neutral-800 dark:text-neutral-100">Cuaca & Dashboard</span>
-            <Button
-              onClick={() => setShowMobilePanel(false)}
-              variant="ghost"
-              size="sm"
-              className="h-8 px-3 rounded-xl text-neutral-500 hover:text-neutral-700 dark:text-neutral-400"
-            >
-              Tutup
-            </Button>
-          </div>
-        )}
-        
+      {/* Right Side Weather Widgets (Desktop Only) */}
+      <div className="hidden sm:flex absolute sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] sm:max-h-[calc(100vh-160px)] sm:overflow-y-auto flex-col gap-3 pointer-events-auto">
         <OpenMeteoCard
           weather={weather}
           loading={weatherLoading}
@@ -347,10 +314,7 @@ function Page() {
           <MultiLocationWeather
             weatherData={multiWeatherData}
             loading={multiWeatherLoading}
-            onLocationClick={(lat, lng, name) => {
-              handleDashboardLocationClick(lat, lng, name);
-              setShowMobilePanel(false);
-            }}
+            onLocationClick={handleDashboardLocationClick}
           />
         )}
       </div>
@@ -394,10 +358,30 @@ function Page() {
         <div className="flex items-center justify-between p-1.5 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md">
           <Legend layerType={layerType} compact />
           <LayerToggle compact />
-          <MapStyleSelector compact />
           <button
-            onClick={() => setShowMobileSettings(true)}
-            className="flex items-center justify-center w-8 h-8 text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg transition-colors shrink-0"
+            onClick={() => {
+              setActiveMobileTab('weather');
+              setMobileMenuOpen(true);
+            }}
+            className={`flex items-center justify-center w-8 h-8 rounded-lg transition-colors shrink-0 ${
+              mobileMenuOpen && activeMobileTab === 'weather'
+                ? 'bg-accent-brand/10 text-accent-brand'
+                : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+            }`}
+            title="Info Cuaca"
+          >
+            <CloudRain className="w-4.5 h-4.5" />
+          </button>
+          <button
+            onClick={() => {
+              setActiveMobileTab('settings');
+              setMobileMenuOpen(true);
+            }}
+            className={`flex items-center justify-center w-8 h-8 rounded-lg transition-colors shrink-0 ${
+              mobileMenuOpen && activeMobileTab === 'settings'
+                ? 'bg-accent-brand/10 text-accent-brand'
+                : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+            }`}
             title="Pengaturan Peta"
           >
             <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -408,47 +392,117 @@ function Page() {
         </div>
       </div>
 
-      {/* MOBILE Settings Sheet Overlay */}
-      {showMobileSettings && (
-        <div className="fixed inset-0 bg-black/40 z-[1250] sm:hidden" onClick={() => setShowMobileSettings(false)} />
+      {/* MOBILE Control Center Drawer Overlay */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 bg-black/40 z-[1250] sm:hidden" onClick={() => setMobileMenuOpen(false)} />
       )}
-      
-      {/* MOBILE Settings Sheet */}
-      <div className={`fixed bottom-0 left-0 right-0 z-[1300] bg-white dark:bg-neutral-900 border-t border-gray-200 dark:border-neutral-800 rounded-t-3xl p-5 flex flex-col gap-4.5 shadow-2xl transition-transform duration-300 sm:hidden pointer-events-auto
-        ${showMobileSettings ? 'translate-y-0' : 'translate-y-full'}`}
+
+      {/* MOBILE Control Center Drawer Sheet */}
+      <div className={`fixed bottom-0 left-0 right-0 z-[1300] bg-white dark:bg-neutral-900 border-t border-gray-200 dark:border-neutral-800 rounded-t-3xl p-5 flex flex-col gap-4 shadow-2xl transition-transform duration-300 sm:hidden pointer-events-auto max-h-[75vh] overflow-y-auto
+        ${mobileMenuOpen ? 'translate-y-0' : 'translate-y-full'}`}
       >
-        <div className="flex justify-center mb-1">
+        {/* Handle bar */}
+        <div className="flex justify-center mb-1 shrink-0">
           <div className="w-8 h-1 bg-neutral-300 dark:bg-neutral-600 rounded-full" />
         </div>
-        <div className="flex items-center justify-between border-b border-gray-150 dark:border-neutral-800 pb-2.5">
-          <span className="text-sm font-bold text-neutral-800 dark:text-neutral-100">Pengaturan Peta</span>
+
+        {/* Tab Headers */}
+        <div className="flex items-center justify-between border-b border-gray-100 dark:border-neutral-800 pb-2.5 shrink-0">
+          <div className="flex gap-1 bg-gray-50 dark:bg-neutral-850 p-1 rounded-xl">
+            <button
+              onClick={() => setActiveMobileTab('weather')}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+                activeMobileTab === 'weather'
+                  ? 'bg-accent-brand text-white'
+                  : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+              }`}
+            >
+              <CloudRain className="w-3.5 h-3.5" />
+              Cuaca
+            </button>
+            {currentUser && savedLocs.length > 0 && (
+              <button
+                onClick={() => setActiveMobileTab('locations')}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+                  activeMobileTab === 'locations'
+                    ? 'bg-accent-brand text-white'
+                    : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+                }`}
+              >
+                <MapPin className="w-3.5 h-3.5" />
+                Lokasi
+              </button>
+            )}
+            <button
+              onClick={() => setActiveMobileTab('settings')}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+                activeMobileTab === 'settings'
+                  ? 'bg-accent-brand text-white'
+                  : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
+              }`}
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Peta
+            </button>
+          </div>
           <Button
-            onClick={() => setShowMobileSettings(false)}
+            onClick={() => setMobileMenuOpen(false)}
             variant="ghost"
             size="sm"
-            className="h-8 px-3 rounded-xl text-neutral-500 hover:text-neutral-700"
+            className="h-8 px-2.5 rounded-xl text-neutral-500 hover:text-neutral-700"
           >
-            Selesai
+            Tutup
           </Button>
         </div>
-        
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Gaya Peta</span>
-            <MapStyleSelector />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Skema Warna Radar</span>
-            <ColorSchemePicker />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Transparansi Lapisan</span>
-            <OpacitySlider />
-          </div>
-          {currentUser && (
-            <div className="flex flex-col gap-1.5">
-              <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Konfigurasi Peringatan Cuaca</span>
-              <AlertThresholdEditor alertConfig={alertConfig} onSave={updateAlertConfig} />
+
+        {/* Tab Contents */}
+        <div className="flex-1 overflow-y-auto min-h-0 pt-2 custom-scrollbar">
+          {activeMobileTab === 'weather' && (
+            <OpenMeteoCard
+              weather={weather}
+              loading={weatherLoading}
+              error={weatherError}
+              latitude={activeWeatherCoords[0]}
+              longitude={activeWeatherCoords[1]}
+              locationName={locationName}
+              customThresholds={currentUser ? alertConfig : null}
+            />
+          )}
+
+          {activeMobileTab === 'locations' && currentUser && savedLocs.length > 0 && (
+            <MultiLocationWeather
+              weatherData={multiWeatherData}
+              loading={multiWeatherLoading}
+              onLocationClick={(lat, lng, name) => {
+                handleDashboardLocationClick(lat, lng, name);
+                setMobileMenuOpen(false);
+              }}
+            />
+          )}
+
+          {activeMobileTab === 'settings' && (
+            <div className="flex flex-col gap-4.5 pb-4">
+              <div className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Gaya Peta</span>
+                <MapStyleSelector />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Skema Warna Radar</span>
+                <ColorSchemePicker />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Transparansi Lapisan</span>
+                <OpacitySlider />
+              </div>
+              {currentUser && (
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Konfigurasi Peringatan Cuaca</span>
+                  <AlertThresholdEditor alertConfig={alertConfig} onSave={updateAlertConfig} />
+                </div>
+              )}
             </div>
           )}
         </div>
