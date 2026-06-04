@@ -243,7 +243,7 @@ function Page() {
             <span className="font-semibold">{getRadarError(typeof radarError === 'object' ? radarError?.status : null).title}</span>
             <span className="text-red-600">{getRadarError(typeof radarError === 'object' ? radarError?.status : null).detail}</span>
           </div>
-          <Button onClick={refresh} size="sm" className="h-8 bg-red-100 hover:bg-red-200 border border-red-300 ml-auto text-red-700 text-xs rounded-xl shrink-0">
+          <Button onClick={refresh} size="sm" className="h-10 min-w-[44px] bg-red-100 hover:bg-red-200 border border-red-300 ml-auto text-red-700 text-xs rounded-xl shrink-0">
             {getRadarError(typeof radarError === 'object' ? radarError?.status : null).action}
           </Button>
         </div>
@@ -295,7 +295,7 @@ function Page() {
 
       {/* GeoLocation Button */}
       {/* Desktop: top-right. Mobile: bottom-right above controls */}
-      <div className="absolute bottom-[216px] right-4 sm:top-4 sm:bottom-auto z-[1100] pointer-events-auto">
+      <div className="absolute bottom-24 right-4 sm:top-4 sm:bottom-auto z-[1100] pointer-events-auto">
         <GeoLocationButton onClick={getMyLocation} loading={geoLoading} />
       </div>
 
@@ -355,7 +355,7 @@ function Page() {
 
       {/* MOBILE: compact horizontal bar */}
       <div className="sm:hidden absolute bottom-4 left-4 right-4 z-[1100] pointer-events-auto">
-        <div className="flex items-center justify-between p-1.5 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md">
+        <div className="flex items-center justify-around p-2 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md gap-2">
           <Legend layerType={layerType} compact />
           <LayerToggle compact />
           <button
@@ -363,28 +363,28 @@ function Page() {
               setActiveMobileTab('weather');
               setMobileMenuOpen(true);
             }}
-            className={`flex items-center justify-center w-8 h-8 rounded-lg transition-colors shrink-0 ${
+            className={`flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-150 shrink-0 active:scale-90 ${
               mobileMenuOpen && activeMobileTab === 'weather'
                 ? 'bg-accent-brand/10 text-accent-brand'
                 : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
             }`}
             title="Info Cuaca"
           >
-            <CloudRain className="w-4.5 h-4.5" />
+            <CloudRain className="w-5 h-5" />
           </button>
           <button
             onClick={() => {
               setActiveMobileTab('settings');
               setMobileMenuOpen(true);
             }}
-            className={`flex items-center justify-center w-8 h-8 rounded-lg transition-colors shrink-0 ${
+            className={`flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-150 shrink-0 active:scale-90 ${
               mobileMenuOpen && activeMobileTab === 'settings'
                 ? 'bg-accent-brand/10 text-accent-brand'
                 : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
             }`}
             title="Pengaturan Peta"
           >
-            <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
@@ -411,7 +411,7 @@ function Page() {
           <div className="flex gap-1 bg-gray-50 dark:bg-neutral-850 p-1 rounded-xl">
             <button
               onClick={() => setActiveMobileTab('weather')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+              className={`px-4 py-2.5 text-xs font-semibold rounded-lg transition-all duration-150 flex items-center gap-1.5 active:scale-95 ${
                 activeMobileTab === 'weather'
                   ? 'bg-accent-brand text-white'
                   : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
@@ -423,7 +423,7 @@ function Page() {
             {currentUser && savedLocs.length > 0 && (
               <button
                 onClick={() => setActiveMobileTab('locations')}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+                className={`px-4 py-2.5 text-xs font-semibold rounded-lg transition-all duration-150 flex items-center gap-1.5 active:scale-95 ${
                   activeMobileTab === 'locations'
                     ? 'bg-accent-brand text-white'
                     : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
@@ -435,7 +435,7 @@ function Page() {
             )}
             <button
               onClick={() => setActiveMobileTab('settings')}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+              className={`px-4 py-2.5 text-xs font-semibold rounded-lg transition-all duration-150 flex items-center gap-1.5 active:scale-95 ${
                 activeMobileTab === 'settings'
                   ? 'bg-accent-brand text-white'
                   : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
@@ -452,7 +452,7 @@ function Page() {
             onClick={() => setMobileMenuOpen(false)}
             variant="ghost"
             size="sm"
-            className="h-8 px-2.5 rounded-xl text-neutral-500 hover:text-neutral-700"
+            className="h-10 min-w-[60px] px-3 rounded-xl text-neutral-500 hover:text-neutral-700 active:scale-95 transition-all duration-150"
           >
             Tutup
           </Button>

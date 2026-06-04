@@ -135,7 +135,7 @@ function SearchBar({ onLocationSelect, currentUser }) {
           type="submit"
           disabled={loading || !query.trim()}
           size="sm"
-          className="h-8 bg-accent-brand hover:brightness-110 text-white text-xs font-semibold px-3 rounded-lg"
+          className="h-10 min-w-[44px] bg-accent-brand hover:brightness-110 text-white text-xs font-semibold px-3 rounded-lg"
         >
           {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Cari'}
         </Button>

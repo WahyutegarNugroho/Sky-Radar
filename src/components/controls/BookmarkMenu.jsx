@@ -52,7 +52,7 @@ function BookmarkMenu({ savedLocs, onNavigateTo, onSave, onDelete }) {
       <Button
         onClick={() => setShowMenu(!showMenu)}
         size="icon"
-        className="w-10 h-10 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 shadow-sm transition-colors duration-300"
+        className="w-11 h-11 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl hover:bg-gray-50 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200 shadow-sm transition-colors duration-300"
       >
         <Bookmark className={`w-4 h-4 ${savedLocs.length > 0 ? 'fill-accent-brand text-accent-brand' : 'text-neutral-500 dark:text-neutral-400'}`} />
       </Button>

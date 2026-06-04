@@ -56,9 +56,9 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
           onClick={onPrev}
           variant="ghost"
           size="icon"
-          className="h-8 w-8 sm:h-10 sm:w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all"
+          className="h-10 w-10 sm:h-11 sm:w-11 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all active:scale-90"
         >
-          <SkipBack className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <SkipBack className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
         </Button>
         <Button
           onClick={onPlayToggle}
@@ -79,9 +79,9 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
           onClick={onNext}
           variant="ghost"
           size="icon"
-          className="h-8 w-8 sm:h-10 sm:w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all"
+          className="h-10 w-10 sm:h-11 sm:w-11 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all active:scale-90"
         >
-          <SkipForward className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <SkipForward className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
         </Button>
       </div>
     </div>

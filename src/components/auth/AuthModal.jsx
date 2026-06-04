@@ -78,7 +78,7 @@ function AuthModal({ onAuthSuccess }) {
         <Button
           onClick={() => setIsOpen(true)}
           size="sm"
-          className="bg-accent-brand hover:brightness-110 text-white h-10 px-4 font-medium text-xs pointer-events-auto rounded-xl shadow-sm"
+          className="bg-accent-brand hover:brightness-110 text-white h-11 px-4 font-medium text-xs pointer-events-auto rounded-xl shadow-sm"
         >
           <LogIn className="w-3.5 h-3.5" />
           Masuk

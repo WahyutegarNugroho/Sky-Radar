@@ -38,10 +38,10 @@ function Legend({ layerType, compact }) {
       <div className="relative" ref={ref}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-center w-8 h-8 text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg transition-colors shrink-0"
+          className="flex items-center justify-center w-11 h-11 text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-xl transition-all duration-150 shrink-0 active:scale-90"
           title={title}
         >
-          <Info className="w-4 h-4" />
+          <Info className="w-5 h-5" />
         </button>
         <AnimatePresence>
           {isOpen && (
