@@ -355,7 +355,7 @@ function Page() {
 
       {/* MOBILE: compact horizontal bar */}
       <div className="sm:hidden absolute bottom-4 left-4 right-4 z-[1100] pointer-events-auto">
-        <div className="flex items-center justify-around p-2 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md gap-2">
+        <div className="grid grid-cols-4 gap-1.5 p-2 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md place-items-center">
           <Legend layerType={layerType} compact />
           <LayerToggle compact />
           <button
@@ -363,7 +363,7 @@ function Page() {
               setActiveMobileTab('weather');
               setMobileMenuOpen(true);
             }}
-            className={`flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-150 shrink-0 active:scale-90 ${
+            className={`flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-150 active:scale-90 ${
               mobileMenuOpen && activeMobileTab === 'weather'
                 ? 'bg-accent-brand/10 text-accent-brand'
                 : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
@@ -377,7 +377,7 @@ function Page() {
               setActiveMobileTab('settings');
               setMobileMenuOpen(true);
             }}
-            className={`flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-150 shrink-0 active:scale-90 ${
+            className={`flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-150 active:scale-90 ${
               mobileMenuOpen && activeMobileTab === 'settings'
                 ? 'bg-accent-brand/10 text-accent-brand'
                 : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
