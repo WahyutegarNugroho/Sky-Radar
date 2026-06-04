@@ -18,14 +18,14 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
   const isForecast = isFuture(activeFrame?.time);
 
   return (
-    <div className="flex flex-col gap-3 p-4 bg-white/95 dark:bg-neutral-900/95 backdrop-blur border border-gray-100 dark:border-neutral-800 w-full max-w-4xl mx-auto rounded-2xl shadow-xl transition-colors duration-300">
-      <div className="flex items-center justify-between flex-wrap gap-2">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl">
-            <Clock className="w-4 h-4 text-accent-brand" />
-            <span className="text-sm font-medium font-mono tracking-wide text-neutral-800 dark:text-neutral-200">{formatDateTime(activeFrame?.time)}</span>
+    <div className="flex flex-col gap-2 p-2.5 sm:p-4 bg-white/95 dark:bg-neutral-900/95 backdrop-blur border border-gray-100 dark:border-neutral-800 w-full max-w-4xl mx-auto rounded-2xl shadow-xl transition-colors duration-300">
+      <div className="flex items-center justify-between flex-wrap gap-1.5">
+        <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 px-2 py-1 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-lg">
+            <Clock className="w-3.5 h-3.5 text-accent-brand shrink-0" />
+            <span className="text-xs sm:text-sm font-medium font-mono tracking-wide text-neutral-800 dark:text-neutral-200">{formatDateTime(activeFrame?.time)}</span>
           </div>
-          <span className={`text-xs font-medium px-2 py-1 rounded-lg ${
+          <span className={`text-[10px] sm:text-xs font-medium px-1.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg ${
             isForecast
               ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 dark:border-emerald-900/30'
               : 'bg-accent-brand/10 text-accent-brand border border-accent-brand/20'
@@ -33,11 +33,11 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
             {isForecast ? 'Prakiraan' : 'Data Historis'}
           </span>
         </div>
-        <span className="text-xs text-neutral-400 dark:text-neutral-300">Frame {currentIndex + 1} / {radarList.length}</span>
+        <span className="text-[10px] sm:text-xs text-neutral-400 dark:text-neutral-300">Frame {currentIndex + 1} / {radarList.length}</span>
       </div>
 
       <div className="flex items-center gap-2">
-        <span className="text-xs text-neutral-400 dark:text-neutral-300 font-medium">Historis</span>
+        <span className="hidden sm:inline text-xs text-neutral-400 dark:text-neutral-300 font-medium">Historis</span>
         <div className="flex-1 px-1">
           <Slider
             value={[currentIndex]}
@@ -48,40 +48,40 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
             className="cursor-pointer"
           />
         </div>
-        <span className="text-xs text-neutral-400 dark:text-neutral-300 font-medium">Prakiraan</span>
+        <span className="hidden sm:inline text-xs text-neutral-400 dark:text-neutral-300 font-medium">Prakiraan</span>
       </div>
 
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-3 mt-1 sm:mt-0">
         <Button
           onClick={onPrev}
           variant="ghost"
           size="icon"
-          className="h-10 w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all"
+          className="h-8 w-8 sm:h-10 sm:w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all"
         >
-          <SkipBack className="h-4 w-4" />
+          <SkipBack className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
         </Button>
         <Button
           onClick={onPlayToggle}
           size="icon"
-          className={`h-14 w-14 rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95 duration-200 ${
+          className={`h-11 w-11 sm:h-14 sm:w-14 rounded-full flex items-center justify-center shadow-md transition-all hover:scale-105 active:scale-95 duration-205 ${
             isPlaying
               ? 'bg-gray-100 text-neutral-900 hover:bg-gray-200 border border-gray-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:border-neutral-700'
               : 'bg-accent-brand text-white hover:brightness-110'
           }`}
         >
           {isPlaying ? (
-            <Pause className="h-5 w-5 fill-neutral-900 dark:fill-neutral-200" />
+            <Pause className="h-4.5 w-4.5 sm:h-5 sm:w-5 fill-neutral-900 dark:fill-neutral-200" />
           ) : (
-            <Play className="h-5 w-5 fill-white ml-0.5" />
+            <Play className="h-4.5 w-4.5 sm:h-5 sm:w-5 fill-white ml-0.5" />
           )}
         </Button>
         <Button
           onClick={onNext}
           variant="ghost"
           size="icon"
-          className="h-10 w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all"
+          className="h-8 w-8 sm:h-10 sm:w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all"
         >
-          <SkipForward className="h-4 w-4" />
+          <SkipForward className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
         </Button>
       </div>
     </div>
