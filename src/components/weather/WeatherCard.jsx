@@ -14,7 +14,7 @@ function getTheme(code) {
   if (code === 0 || code === 1) return { border: 'border-amber-300', bg: 'from-amber-500/[0.03]' };
   if ((code >= 51 && code <= 65) || (code >= 80 && code <= 82)) return { border: 'border-sky-500/30', bg: 'from-sky-500/[0.03]' };
   if (code >= 95) return { border: 'border-violet-500/30', bg: 'from-violet-500/[0.03]' };
-  return { border: 'border-gray-250 dark:border-neutral-800/50', bg: 'from-blue-700/[0.03]' };
+  return { border: 'border-gray-200 dark:border-neutral-800/50', bg: 'from-blue-700/[0.03]' };
 }
 
 function WeatherCard({ weather, loading, error, latitude, longitude, locationName, customThresholds, onClose }) {

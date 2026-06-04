@@ -42,7 +42,7 @@ function WeatherExpanded({ weather, locationName, currentTime, timezoneAbbr, ale
         <div className="flex flex-col gap-1 min-w-0">
           <div className="flex items-center gap-2">
             {currentTime && (
-              <div className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-350 font-mono tabular-nums bg-gray-50 dark:bg-neutral-800/80 border border-gray-200 dark:border-neutral-700 px-1.5 py-0.5 rounded-lg">
+              <div className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-300 font-mono tabular-nums bg-gray-50 dark:bg-neutral-800/80 border border-gray-200 dark:border-neutral-700 px-1.5 py-0.5 rounded-lg">
                 <Clock className="w-2.5 h-2.5 text-neutral-400" />
                 <span>{currentTime}</span>
                 <span className="text-xs text-neutral-400 font-medium">{timezoneAbbr || 'WIB'}</span>
@@ -50,13 +50,13 @@ function WeatherExpanded({ weather, locationName, currentTime, timezoneAbbr, ale
             )}
           </div>
           {locationName && (
-            <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-250 truncate">{locationName}</div>
+            <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 truncate">{locationName}</div>
           )}
         </div>
         <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={onMinimize}
-            className="px-2 py-1 text-[11px] font-semibold text-neutral-600 dark:text-neutral-350 border border-gray-200 dark:border-neutral-750 rounded-lg hover:bg-gray-55 dark:hover:bg-neutral-800 transition-colors active:scale-95"
+            className="px-2 py-1 text-[11px] font-semibold text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors active:scale-95"
             title="Kembali"
           >
             Kembali

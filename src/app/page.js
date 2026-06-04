@@ -408,7 +408,7 @@ function Page() {
 
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-gray-100 dark:border-neutral-800 pb-3 shrink-0">
-          <h2 className="text-sm font-bold text-neutral-850 dark:text-neutral-100">
+          <h2 className="text-sm font-bold text-neutral-800 dark:text-neutral-100">
             {activeMobileTab === 'weather' ? 'Info Cuaca' : 'Pengaturan Peta'}
           </h2>
           <Button
