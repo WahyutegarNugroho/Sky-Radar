@@ -355,7 +355,7 @@ function Page() {
 
       {/* MOBILE: compact horizontal bar */}
       <div className="sm:hidden absolute bottom-4 left-4 right-4 z-[1100] pointer-events-auto">
-        <div className="grid grid-cols-4 gap-1.5 p-2 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md place-items-center">
+        <div className="grid grid-cols-5 gap-1.5 p-2 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md place-items-center">
           <Legend layerType={layerType} compact />
           <LayerToggle compact />
           <button

@@ -7,10 +7,10 @@ function LayerToggle({ compact }) {
 
   if (compact) {
     return (
-      <div className="inline-flex gap-0.5 p-0.5 bg-white/90 dark:bg-neutral-900/90 border border-gray-100 dark:border-neutral-800 rounded-xl shadow-sm shrink-0">
+      <>
         <button
           onClick={() => setLayerType('radar')}
-          className={`flex items-center justify-center w-11 h-11 text-xs font-medium rounded-lg transition-all duration-150 active:scale-90 ${
+          className={`flex items-center justify-center w-11 h-11 text-xs font-medium rounded-xl transition-all duration-150 active:scale-90 ${
             layerType === 'radar'
               ? 'bg-accent-brand text-white'
               : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
@@ -21,7 +21,7 @@ function LayerToggle({ compact }) {
         </button>
         <button
           onClick={() => setLayerType('satellite')}
-          className={`flex items-center justify-center w-11 h-11 text-xs font-medium rounded-lg transition-all duration-150 active:scale-90 ${
+          className={`flex items-center justify-center w-11 h-11 text-xs font-medium rounded-xl transition-all duration-150 active:scale-90 ${
             layerType === 'satellite'
               ? 'bg-accent-brand text-white'
               : 'text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800'
@@ -30,7 +30,7 @@ function LayerToggle({ compact }) {
         >
           <Satellite className="w-4.5 h-4.5" />
         </button>
-      </div>
+      </>
     );
   }
 
