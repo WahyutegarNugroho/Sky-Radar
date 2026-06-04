@@ -45,6 +45,16 @@ const MapView = dynamic(() => import('../components/map/MapView'), {
 function Page() {
   const [isMounted, setIsMounted] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
+  const [showMobilePanel, setShowMobilePanel] = useState(false);
+  const [showMobileSettings, setShowMobileSettings] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   const {
     mapCenter, mapZoom, mapStyle, opacity, colorSchemeId, layerType,
     setMapCenter, setMapZoom, handleMapStateChange, setLayerType,
@@ -285,16 +295,45 @@ function Page() {
 
       {/* GeoLocation Button */}
       {/* Desktop: top-right. Mobile: bottom-right above controls */}
-      <div className="absolute bottom-24 right-4 sm:top-4 sm:bottom-auto z-[1500] pointer-events-auto">
+      <div className="absolute bottom-36 right-4 sm:top-4 sm:bottom-auto z-[1100] pointer-events-auto">
         <GeoLocationButton onClick={getMyLocation} loading={geoLoading} />
       </div>
 
+      {/* Mobile Weather Info Toggle Button */}
+      <div className="absolute top-[88px] right-4 sm:hidden z-[1100] pointer-events-auto">
+        <Button
+          onClick={() => setShowMobilePanel(true)}
+          className="w-10 h-10 rounded-full bg-white/90 dark:bg-neutral-900/90 backdrop-blur border border-gray-250 dark:border-neutral-800 shadow-md flex items-center justify-center text-neutral-700 dark:text-neutral-200"
+          size="icon"
+          variant="outline"
+        >
+          <CloudRain className="w-5 h-5" />
+        </Button>
+      </div>
+
       {/* Right Side Weather Widgets Column */}
-      {/* Mobile: bottom-anchored sheet. Desktop: right sidebar */}
-      <div className="absolute sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] z-[1100] flex flex-col gap-3 pointer-events-auto sm:max-h-[calc(100vh-160px)] sm:overflow-y-auto
-        bottom-0 left-0 right-0 max-h-[75vh] overflow-y-auto
-        sm:bg-transparent sm:border-0 sm:shadow-none sm:rounded-none
-      ">
+      {/* Mobile: Full Screen Drawer. Desktop: right sidebar */}
+      <div className={`absolute z-[1200] sm:z-[1100] sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] sm:max-h-[calc(100vh-160px)] sm:overflow-y-auto sm:flex sm:flex-col sm:gap-3 sm:pointer-events-auto
+        ${showMobilePanel
+          ? 'fixed inset-4 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md p-4.5 rounded-3xl border border-gray-150 dark:border-neutral-800 shadow-2xl overflow-y-auto flex flex-col gap-3 pointer-events-auto'
+          : 'hidden'
+        }`}
+      >
+        {/* Mobile Header and Close Button */}
+        {showMobilePanel && (
+          <div className="flex sm:hidden items-center justify-between border-b border-gray-100 dark:border-neutral-800 pb-2 mb-1">
+            <span className="text-sm font-bold text-neutral-800 dark:text-neutral-100">Cuaca & Dashboard</span>
+            <Button
+              onClick={() => setShowMobilePanel(false)}
+              variant="ghost"
+              size="sm"
+              className="h-8 px-3 rounded-xl text-neutral-500 hover:text-neutral-700 dark:text-neutral-400"
+            >
+              Tutup
+            </Button>
+          </div>
+        )}
+        
         <OpenMeteoCard
           weather={weather}
           loading={weatherLoading}
@@ -308,20 +347,20 @@ function Page() {
           <MultiLocationWeather
             weatherData={multiWeatherData}
             loading={multiWeatherLoading}
-            onLocationClick={handleDashboardLocationClick}
+            onLocationClick={(lat, lng, name) => {
+              handleDashboardLocationClick(lat, lng, name);
+              setShowMobilePanel(false);
+            }}
           />
         )}
       </div>
 
       {/* ============================================================ */}
       {/* LAYER 5: Bottom Controls (z-1100)                            */}
-      {/* Mobile: stacked vertically, Timeline above panel             */}
-      {/* Desktop: panel left, Timeline right of panel                 */}
       {/* ============================================================ */}
 
       {/* Timeline Player / Radar Loading / Satellite Status */}
-      {/* Mobile: above bottom bar. Desktop: right of bottom panel */}
-      <div className="absolute bottom-28 left-4 right-4 sm:bottom-4 sm:left-[300px] sm:right-4 sm:max-w-3xl z-[1100] pointer-events-auto">
+      <div className="absolute bottom-20 left-4 right-4 sm:bottom-4 sm:left-[300px] sm:right-4 sm:max-w-3xl z-[1100] pointer-events-auto">
         {radarLoading && !radarData ? (
           <div className="flex items-center justify-center gap-3 p-4 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 text-sm rounded-2xl shadow-sm">
             <RefreshCw className="w-5 h-5 animate-spin text-accent-brand shrink-0" />
@@ -333,9 +372,9 @@ function Page() {
               <span className="relative flex h-2.5 w-2.5">
                 <span className="inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
-              <span className="text-xs font-medium text-neutral-800 dark:text-neutral-200">Satelit Himawari-9 Aktif</span>
+              <span className="text-xs font-semibold text-neutral-800 dark:text-neutral-200">Satelit Himawari-9 Aktif</span>
             </div>
-            <span className="text-xs text-neutral-400 dark:text-neutral-300 bg-gray-50/80 dark:bg-neutral-800/80 border border-gray-100 dark:border-neutral-700 px-2 py-1 rounded-lg">NASA GIBS (IR Clean)</span>
+            <span className="text-xs text-neutral-400 dark:text-neutral-300 bg-gray-50/80 dark:bg-neutral-800/80 border border-gray-100 dark:border-neutral-750 px-2 py-1 rounded-lg">NASA GIBS (IR Clean)</span>
           </div>
         ) : (
           <TimelinePlayer
@@ -350,20 +389,71 @@ function Page() {
         )}
       </div>
 
-      {/* Bottom Controls Panel */}
       {/* MOBILE: compact horizontal bar */}
       <div className="sm:hidden absolute bottom-4 left-4 right-4 z-[1100] pointer-events-auto">
-        <div className="flex items-center gap-1.5 p-1.5 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md overflow-x-auto custom-scrollbar">
+        <div className="flex items-center justify-between p-1.5 bg-white/95 dark:bg-neutral-900/95 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-md">
           <Legend layerType={layerType} compact />
-          <MapStyleSelector compact />
           <LayerToggle compact />
-          <ColorSchemePicker />
-          {currentUser && (
-            <AlertThresholdEditor alertConfig={alertConfig} onSave={updateAlertConfig} />
-          )}
-          <OpacitySlider compact />
+          <MapStyleSelector compact />
+          <button
+            onClick={() => setShowMobileSettings(true)}
+            className="flex items-center justify-center w-8 h-8 text-neutral-500 dark:text-neutral-400 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-lg transition-colors shrink-0"
+            title="Pengaturan Peta"
+          >
+            <svg className="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </button>
         </div>
       </div>
+
+      {/* MOBILE Settings Sheet Overlay */}
+      {showMobileSettings && (
+        <div className="fixed inset-0 bg-black/40 z-[1250] sm:hidden" onClick={() => setShowMobileSettings(false)} />
+      )}
+      
+      {/* MOBILE Settings Sheet */}
+      <div className={`fixed bottom-0 left-0 right-0 z-[1300] bg-white dark:bg-neutral-900 border-t border-gray-200 dark:border-neutral-800 rounded-t-3xl p-5 flex flex-col gap-4.5 shadow-2xl transition-transform duration-300 sm:hidden pointer-events-auto
+        ${showMobileSettings ? 'translate-y-0' : 'translate-y-full'}`}
+      >
+        <div className="flex justify-center mb-1">
+          <div className="w-8 h-1 bg-neutral-300 dark:bg-neutral-600 rounded-full" />
+        </div>
+        <div className="flex items-center justify-between border-b border-gray-150 dark:border-neutral-800 pb-2.5">
+          <span className="text-sm font-bold text-neutral-800 dark:text-neutral-100">Pengaturan Peta</span>
+          <Button
+            onClick={() => setShowMobileSettings(false)}
+            variant="ghost"
+            size="sm"
+            className="h-8 px-3 rounded-xl text-neutral-500 hover:text-neutral-700"
+          >
+            Selesai
+          </Button>
+        </div>
+        
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Gaya Peta</span>
+            <MapStyleSelector />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Skema Warna Radar</span>
+            <ColorSchemePicker />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Transparansi Lapisan</span>
+            <OpacitySlider />
+          </div>
+          {currentUser && (
+            <div className="flex flex-col gap-1.5">
+              <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">Konfigurasi Peringatan Cuaca</span>
+              <AlertThresholdEditor alertConfig={alertConfig} onSave={updateAlertConfig} />
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* DESKTOP: vertical panel */}
       <div className="hidden sm:flex absolute bottom-4 left-4 sm:right-auto sm:max-w-[280px] z-[1100] flex-col gap-2.5 pointer-events-auto">
         <Legend layerType={layerType} />
