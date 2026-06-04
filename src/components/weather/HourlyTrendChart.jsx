@@ -32,7 +32,7 @@ function HourlyTrendChart({ hourly }) {
 
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-350">Tren 24 Jam</span>
+      <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-300">Tren 24 Jam</span>
       <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-[100px] overflow-visible">
         {/* Precip bars */}
         {precip.map((v, i) =>

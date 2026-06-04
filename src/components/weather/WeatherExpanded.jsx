@@ -42,7 +42,7 @@ function WeatherExpanded({ weather, locationName, currentTime, timezoneAbbr, ale
         <div className="flex flex-col gap-1 min-w-0">
           <div className="flex items-center gap-2">
             {currentTime && (
-              <div className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-400 font-mono tabular-nums bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-750 px-1.5 py-0.5 rounded-lg">
+              <div className="flex items-center gap-1 text-xs text-neutral-500 dark:text-neutral-300 font-mono tabular-nums bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 px-1.5 py-0.5 rounded-lg">
                 <Clock className="w-2.5 h-2.5 text-neutral-400" />
                 <span>{currentTime}</span>
                 <span className="text-xs text-neutral-400 font-medium">{timezoneAbbr || 'WIB'}</span>
@@ -79,25 +79,25 @@ function WeatherExpanded({ weather, locationName, currentTime, timezoneAbbr, ale
 
       <div className="grid grid-cols-2 gap-2">
         <div className="flex flex-col gap-1 p-2 bg-gray-50 dark:bg-neutral-800/60 rounded-xl">
-          <div className="flex items-center gap-1 text-xs text-neutral-400">
+          <div className="flex items-center gap-1 text-xs text-neutral-400 dark:text-neutral-300">
             <Thermometer className="w-3.5 h-3.5 text-red-500/80" /> Suhu
           </div>
           <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">{Math.round(weather.temperature_2m)}&deg;C</span>
         </div>
         <div className="flex flex-col gap-1 p-2 bg-gray-50 dark:bg-neutral-800/60 rounded-xl">
-          <div className="flex items-center gap-1 text-xs text-neutral-400">
+          <div className="flex items-center gap-1 text-xs text-neutral-400 dark:text-neutral-300">
             <Droplets className="w-3.5 h-3.5 text-blue-400/80" /> Kelembaban
           </div>
           <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">{weather.relative_humidity_2m}%</span>
         </div>
         <div className="flex flex-col gap-1 p-2 bg-gray-50 dark:bg-neutral-800/60 rounded-xl">
-          <div className="flex items-center gap-1 text-xs text-neutral-400">
+          <div className="flex items-center gap-1 text-xs text-neutral-400 dark:text-neutral-300">
             <Wind className="w-3.5 h-3.5 text-emerald-400/80" /> Kec. Angin
           </div>
           <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 truncate">{Math.round(weather.wind_speed_10m)} km/h</span>
         </div>
         <div className="flex flex-col gap-1 p-2 bg-gray-50 dark:bg-neutral-800/60 rounded-xl">
-          <div className="flex items-center gap-1.5 text-xs text-neutral-400">
+          <div className="flex items-center gap-1.5 text-xs text-neutral-400 dark:text-neutral-300">
             <div className="relative w-3.5 h-3.5 flex items-center justify-center bg-white dark:bg-neutral-950 border border-gray-200 dark:border-neutral-800 rounded-sm shrink-0">
               <div className="w-0.5 h-2.5 bg-blue-600 transition-transform" style={{ transform: `rotate(${weather.wind_direction_10m}deg)`, transformOrigin: 'center' }} />
             </div>
@@ -106,13 +106,13 @@ function WeatherExpanded({ weather, locationName, currentTime, timezoneAbbr, ale
           <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 truncate">{windDir}</span>
         </div>
         <div className="flex flex-col gap-1 p-2 bg-gray-50 dark:bg-neutral-800/60 rounded-xl">
-          <div className="flex items-center gap-1 text-xs text-neutral-400">
+          <div className="flex items-center gap-1 text-xs text-neutral-400 dark:text-neutral-300">
             <CloudRain className="w-3.5 h-3.5 text-sky-400/80" /> Hujan
           </div>
           <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">{weather.precipitation} mm</span>
         </div>
         <div className="flex flex-col gap-1 p-2 bg-gray-50 dark:bg-neutral-800/60 rounded-xl">
-          <div className="flex items-center gap-1 text-xs text-neutral-400">
+          <div className="flex items-center gap-1 text-xs text-neutral-400 dark:text-neutral-300">
             <Sun className="w-3.5 h-3.5 text-yellow-400/80" /> Radiasi
           </div>
           <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 truncate">{weather.shortwave_radiation} W/m&sup2;</span>
@@ -120,9 +120,9 @@ function WeatherExpanded({ weather, locationName, currentTime, timezoneAbbr, ale
       </div>
 
       <div className={`flex flex-col gap-1 p-2.5 border ${aqiInfo.color} rounded-xl`}>
-        <div className="flex items-center justify-between text-xs font-medium opacity-90">
+        <div className="flex items-center justify-between text-xs font-medium text-neutral-600 dark:text-neutral-300">
           <span>Kualitas Udara (US AQI)</span>
-          {weather.us_aqi !== null && <span className="font-mono text-xs font-semibold">{weather.us_aqi}</span>}
+          {weather.us_aqi !== null && <span className="font-mono text-xs font-semibold text-neutral-700 dark:text-neutral-200">{weather.us_aqi}</span>}
         </div>
         <span className="text-xs font-semibold tracking-tight leading-none">{aqiInfo.label}</span>
       </div>

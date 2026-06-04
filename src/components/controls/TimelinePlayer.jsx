@@ -21,7 +21,7 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
     <div className="flex flex-col gap-3 p-4 bg-white/95 dark:bg-neutral-900/95 backdrop-blur border border-gray-100 dark:border-neutral-800 w-full max-w-4xl mx-auto rounded-2xl shadow-xl transition-colors duration-300">
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-750 rounded-xl">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl">
             <Clock className="w-4 h-4 text-accent-brand" />
             <span className="text-sm font-medium font-mono tracking-wide text-neutral-800 dark:text-neutral-200">{formatDateTime(activeFrame?.time)}</span>
           </div>
@@ -33,11 +33,11 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
             {isForecast ? 'Prakiraan' : 'Data Historis'}
           </span>
         </div>
-        <span className="text-xs text-neutral-400 dark:text-neutral-500">Frame {currentIndex + 1} / {radarList.length}</span>
+        <span className="text-xs text-neutral-400 dark:text-neutral-300">Frame {currentIndex + 1} / {radarList.length}</span>
       </div>
 
       <div className="flex items-center gap-2">
-        <span className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">Historis</span>
+        <span className="text-xs text-neutral-400 dark:text-neutral-300 font-medium">Historis</span>
         <div className="flex-1 px-1">
           <Slider
             value={[currentIndex]}
@@ -48,7 +48,7 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
             className="cursor-pointer"
           />
         </div>
-        <span className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">Prakiraan</span>
+        <span className="text-xs text-neutral-400 dark:text-neutral-300 font-medium">Prakiraan</span>
       </div>
 
       <div className="flex items-center justify-center gap-4">
@@ -56,7 +56,7 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
           onClick={onPrev}
           variant="ghost"
           size="icon"
-          className="h-10 w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-350 border border-gray-200 dark:border-neutral-750 shadow-sm flex items-center justify-center transition-all"
+          className="h-10 w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all"
         >
           <SkipBack className="h-4 w-4" />
         </Button>
@@ -79,7 +79,7 @@ function TimelinePlayer({ radarList, currentIndex, isPlaying, onPlayToggle, onIn
           onClick={onNext}
           variant="ghost"
           size="icon"
-          className="h-10 w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-350 border border-gray-200 dark:border-neutral-750 shadow-sm flex items-center justify-center transition-all"
+          className="h-10 w-10 rounded-full hover:bg-gray-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 shadow-sm flex items-center justify-center transition-all"
         >
           <SkipForward className="h-4 w-4" />
         </Button>

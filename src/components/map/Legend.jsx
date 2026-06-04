@@ -52,7 +52,7 @@ function Legend({ layerType, compact }) {
               transition={{ duration: 0.12 }}
               className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-[1500] p-2.5 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl shadow-xl min-w-[140px]"
             >
-              <span className="text-xs text-neutral-400 dark:text-neutral-500 font-medium block mb-1.5">{title}</span>
+              <span className="text-xs text-neutral-400 dark:text-neutral-300 font-medium block mb-1.5">{title}</span>
               <div className="flex flex-col gap-1">
                 {levels.map((level) => (
                   <div key={level.label} className="flex items-center gap-2 text-xs text-neutral-600 dark:text-neutral-300">
@@ -70,7 +70,7 @@ function Legend({ layerType, compact }) {
 
   return (
     <div className="flex flex-col gap-2 p-3 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-xl shadow-sm min-w-[160px] transition-colors duration-300">
-      <span className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">{title}</span>
+      <span className="text-xs text-neutral-400 dark:text-neutral-300 font-medium">{title}</span>
       <div className="flex flex-col gap-1.5">
         {levels.map((level) => (
           <div key={level.label} className="flex items-center gap-2 text-xs text-neutral-600 dark:text-neutral-300">

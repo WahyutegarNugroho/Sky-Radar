@@ -34,7 +34,7 @@ function WeatherMinimized({ weather, onExpand }) {
       {getIcon(weather.weather_code)}
       <div className="flex flex-col leading-tight">
         <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">{Math.round(weather.temperature_2m)}&deg;C</span>
-        <span className="text-xs text-neutral-500 dark:text-neutral-400 truncate max-w-[80px]">{WEATHER_CODES[weather.weather_code] || ''}</span>
+        <span className="text-xs text-neutral-500 dark:text-neutral-300 truncate max-w-[80px]">{WEATHER_CODES[weather.weather_code] || ''}</span>
       </div>
       <Maximize2 className="w-3 h-3 text-neutral-400 shrink-0 ml-auto" />
     </motion.div>

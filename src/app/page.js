@@ -285,14 +285,15 @@ function Page() {
 
       {/* GeoLocation Button */}
       {/* Desktop: top-right. Mobile: bottom-right above controls */}
-      <div className="absolute bottom-24 right-4 sm:top-4 sm:bottom-auto z-[1100] pointer-events-auto">
+      <div className="absolute bottom-24 right-4 sm:top-4 sm:bottom-auto z-[1500] pointer-events-auto">
         <GeoLocationButton onClick={getMyLocation} loading={geoLoading} />
       </div>
 
       {/* Right Side Weather Widgets Column */}
       {/* Mobile: bottom-anchored sheet. Desktop: right sidebar */}
       <div className="absolute sm:top-20 sm:right-4 sm:left-auto sm:max-w-[280px] z-[1100] flex flex-col gap-3 pointer-events-auto sm:max-h-[calc(100vh-160px)] sm:overflow-y-auto
-        bottom-0 left-0 right-0 max-h-[75vh] overflow-y-auto rounded-t-2xl bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-t border-gray-100 dark:border-neutral-800 shadow-xl
+        bottom-0 left-0 right-0 max-h-[75vh] overflow-y-auto
+        sm:bg-transparent sm:border-0 sm:shadow-none sm:rounded-none
       ">
         <OpenMeteoCard
           weather={weather}
@@ -334,7 +335,7 @@ function Page() {
               </span>
               <span className="text-xs font-medium text-neutral-800 dark:text-neutral-200">Satelit Himawari-9 Aktif</span>
             </div>
-            <span className="text-xs text-neutral-400 dark:text-neutral-500 bg-gray-50/80 dark:bg-neutral-800/80 border border-gray-100 dark:border-neutral-750 px-2 py-1 rounded-lg">NASA GIBS (IR Clean)</span>
+            <span className="text-xs text-neutral-400 dark:text-neutral-300 bg-gray-50/80 dark:bg-neutral-800/80 border border-gray-100 dark:border-neutral-700 px-2 py-1 rounded-lg">NASA GIBS (IR Clean)</span>
           </div>
         ) : (
           <TimelinePlayer

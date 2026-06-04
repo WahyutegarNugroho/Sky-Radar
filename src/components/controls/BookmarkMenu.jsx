@@ -58,11 +58,11 @@ function BookmarkMenu({ savedLocs, onNavigateTo, onSave, onDelete }) {
       </Button>
 
       {showMenu && (
-        <div className="absolute top-full right-0 mt-3 w-64 p-4 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-xl flex flex-col gap-3 max-h-80 overflow-y-auto custom-scrollbar overflow-hidden transition-colors duration-300">
-          <span className="text-xs text-neutral-400 dark:text-neutral-500 font-medium">Lokasi Tersimpan</span>
+        <div className="absolute top-full right-0 mt-3 w-64 max-w-[calc(100vw-48px)] p-4 bg-white dark:bg-neutral-900 border border-gray-100 dark:border-neutral-800 rounded-2xl shadow-xl flex flex-col gap-3 max-h-80 overflow-y-auto custom-scrollbar overflow-hidden transition-colors duration-300">
+          <span className="text-xs text-neutral-400 dark:text-neutral-300 font-medium">Lokasi Tersimpan</span>
 
           {savedLocs.length === 0 ? (
-            <span className="text-xs text-neutral-400 dark:text-neutral-500 text-center py-2">Belum ada lokasi tersimpan.</span>
+            <span className="text-xs text-neutral-400 dark:text-neutral-300 text-center py-2">Belum ada lokasi tersimpan.</span>
           ) : (
             <div className="flex flex-col gap-1 pr-1 max-h-40 overflow-y-auto custom-scrollbar rounded-lg">
               {savedLocs.map((loc) => (
@@ -74,7 +74,7 @@ function BookmarkMenu({ savedLocs, onNavigateTo, onSave, onDelete }) {
                      tabIndex={0}
                      role="button"
                   >
-                    <MapPin className="w-3.5 h-3.5 text-neutral-400 dark:text-neutral-500 shrink-0" />
+                    <MapPin className="w-3.5 h-3.5 text-neutral-400 dark:text-neutral-400 shrink-0" />
                     <span className="text-xs text-neutral-700 dark:text-neutral-300 truncate">{loc.name}</span>
                   </button>
                   <button

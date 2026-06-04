@@ -150,9 +150,9 @@ function SearchBar({ onLocationSelect, currentUser }) {
             transition={{ duration: 0.15 }}
             className="absolute top-12 left-0 right-0 z-[1300] bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-xl shadow-lg overflow-hidden transition-colors duration-300"
           >
-            <div className="px-3 py-2 text-[10px] text-neutral-400 dark:text-neutral-500 font-medium">Pencarian Terakhir</div>
+            <div className="px-3 py-2 text-[10px] text-neutral-400 dark:text-neutral-300 font-medium">Pencarian Terakhir</div>
             {history.length === 0 ? (
-              <div className="px-3 py-3 text-xs text-neutral-400 text-center">Belum ada riwayat pencarian.</div>
+              <div className="px-3 py-3 text-xs text-neutral-400 dark:text-neutral-300 text-center">Belum ada riwayat pencarian.</div>
             ) : (
               <div className="flex flex-col pb-1 max-h-48 overflow-y-auto custom-scrollbar">
                 {history.map((item) => (

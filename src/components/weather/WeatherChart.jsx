@@ -44,7 +44,7 @@ function WeatherChart({ daily }) {
 
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-350">Prakiraan Suhu 7 Hari</span>
+      <span className="text-xs font-semibold text-neutral-600 dark:text-neutral-300">Prakiraan Suhu 7 Hari</span>
       <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-[80px] overflow-visible">
         <defs>
           <linearGradient id="chartArea" x1="0" y1="0" x2="0" y2="1">
