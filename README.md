@@ -129,10 +129,13 @@ Atau gunakan [UptimeRobot](https://uptimerobot.com) (free 50 monitor) dengan int
 
 ### Environment Variables (.env.local)
 
+> ⚠️ File `.env.local` sudah di `.gitignore`. **Jangan pernah** commit file ini. Isi di bawah hanya contoh — ganti dengan value asli milik Anda.
+
 ```env
-DATABASE_URL="postgresql://user:pass@host:6543/db?pgbouncer=true"
-DIRECT_URL="postgresql://user:pass@host:5432/db"
-BETTER_AUTH_SECRET="your-better-auth-secret-key"
+# Contoh — ganti dengan credentials asli Anda!
+DATABASE_URL="postgresql://user:RAHASIA@host:6543/db?pgbouncer=true"
+DIRECT_URL="postgresql://user:RAHASIA@host:5432/db"
+BETTER_AUTH_SECRET="ganti-dengan-secret-random-anda"
 BETTER_AUTH_URL="http://localhost:3000"
 ```
 
