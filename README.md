@@ -42,11 +42,7 @@ SkyRadar adalah aplikasi pemantau cuaca presisi tinggi dengan visualisasi peta r
 * Pencarian lokasi cepat berbasis proxy Nominatim dengan dukungan pencarian geografis.
 * Fitur klik peta langsung (*Map Picker*) untuk menjatuhkan marker koordinat apa saja sekaligus menyimpan lokasi tersebut ke bookmark cloud.
 
-#### 7. PWA (Progressive Web App)
-* Dukungan Service Worker untuk caching aset statis dan navigasi saat luring (*offline support*).
-* Manifest standar untuk pengalaman instalasi aplikasi seluler (*standalone mobile display*).
-
-#### 8. CI/CD & Quality Assurance
+#### 7. CI/CD & Quality Assurance
 * Pengujian unit lengkap dengan **Vitest** (71 tests terlewati) untuk menguji utilitas, caching, hooks, dan skema validasi data.
 * Dukungan TypeScript progresif untuk keamanan tipe data (*type safety*).
 
@@ -56,9 +52,9 @@ SkyRadar adalah aplikasi pemantau cuaca presisi tinggi dengan visualisasi peta r
 
 | Teknologi | Peran | Alasan |
 |---|---|---|
-| **Next.js 15 (App Router)** | Framework | SSR optimal, API route proxying, middleware, routing berbasis folder. |
-| **React 18 / 19** | Library UI | Ekosistem kuat, state management, render performatif. |
-| **TypeScript** | Bahasa | Type safety, self-documenting code, mempercepat deteksi error sebelum build. |
+| **Next.js 15 (App Router)** | Framework | SSR optimal, API route proxying, middleware, routing berbasis folder. Pnpm. |
+| **React 19** | Library UI | Ekosistem kuat, state management, render performatif. |
+| **TypeScript** | Bahasa | Type safety progresif (5 file .ts), self-documenting code. |
 | **Tailwind CSS v4** | Styling | Utility-first, rendering sangat cepat, konfigurasi CSS modern berbasis `@import`. |
 | **Better-Auth** | Authentication | Keamanan mutakhir, konfigurasi mudah, terintegrasi database. |
 | **PostgreSQL (Supabase)** | Database | Keandalan relasional, persistensi cloud terpercaya. |
@@ -78,7 +74,7 @@ SkyRadar adalah aplikasi pemantau cuaca presisi tinggi dengan visualisasi peta r
 
 #### Kekurangan:
 * **Ketergantungan Internet** — Membutuhkan koneksi internet aktif untuk memuat tile peta eksternal dan melacak pembaruan cuaca.
-* **Belum Mendukung Multi-bahasa** | Hanya menyediakan antarmuka dalam Bahasa Indonesia (ID) saat ini.
+* **Belum Mendukung Multi-bahasa** — Hanya menyediakan antarmuka dalam Bahasa Indonesia (ID) saat ini.
 
 ---
 
