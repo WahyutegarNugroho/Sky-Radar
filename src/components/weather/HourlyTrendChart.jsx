@@ -42,7 +42,7 @@ function HourlyTrendChart({ hourly }) {
               x={toX(i) - 2}
               y={toPrecipY(v)}
               width={4}
-              height={h - pad.bottom - toPrecipY(v)}
+              height={Math.max(0, h - pad.bottom - toPrecipY(v))}
               fill="#94a3b8"
               opacity={0.35}
               rx={1}
