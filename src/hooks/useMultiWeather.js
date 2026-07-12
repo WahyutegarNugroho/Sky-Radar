@@ -44,11 +44,12 @@ export function useMultiWeather(locations) {
       setLoading(true);
       const results = await Promise.allSettled(
         currentLocs.map(async (loc) => {
-          const cacheKey = `weather:${loc.lat.toFixed(2)},${loc.lng.toFixed(2)}`;
+          const normLon = ((loc.lng + 180) % 360 + 360) % 360 - 180;
+          const cacheKey = `weather:${loc.lat.toFixed(2)},${normLon.toFixed(2)}`;
           const cached = getClientCache(cacheKey);
           if (cached) return { name: loc.name, lat: loc.lat, lng: loc.lng, weather: cached, loading: false, error: null };
 
-          const res = await fetch(`/api/weather?lat=${loc.lat}&lon=${loc.lng}`);
+          const res = await fetch(`/api/weather?lat=${loc.lat}&lon=${normLon}`);
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const data = await res.json();
           setClientCache(cacheKey, data, CACHE_TTL);

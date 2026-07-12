@@ -19,7 +19,8 @@ export function useWeather(latitude, longitude) {
     }
     abortRef.current?.abort();
 
-    const cacheKey = `weather:${latitude.toFixed(2)},${longitude.toFixed(2)}`;
+    const normLon = ((longitude + 180) % 360 + 360) % 360 - 180;
+    const cacheKey = `weather:${latitude.toFixed(2)},${normLon.toFixed(2)}`;
     const cached = getClientCache(cacheKey);
     if (cached) {
       setWeather(cached);
@@ -36,7 +37,7 @@ export function useWeather(latitude, longitude) {
 
     timerRef.current = setTimeout(async () => {
       try {
-        const res = await fetch(`/api/weather?lat=${latitude}&lon=${longitude}`, {
+        const res = await fetch(`/api/weather?lat=${latitude}&lon=${normLon}`, {
           signal: controller.signal,
         });
         if (!res.ok) throw new Error(`Weather API error: ${res.status}`);
