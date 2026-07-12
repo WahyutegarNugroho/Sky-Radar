@@ -86,7 +86,7 @@ SkyRadar adalah aplikasi pemantau cuaca presisi tinggi dengan visualisasi peta r
 
 #### Prasyarat
 * Node.js v18+
-* npm atau yarn
+* pnpm (atau npm/yarn)
 * Database PostgreSQL (Supabase / lokal)
 
 #### Langkah-Langkah
@@ -96,18 +96,18 @@ SkyRadar adalah aplikasi pemantau cuaca presisi tinggi dengan visualisasi peta r
 git clone https://github.com/WahyutegarNugroho/Sky-Radar.git
 cd Sky-Radar
 
-# 2. Install dependensi (menggunakan legacy-peer-deps jika terjadi konflik versi)
-npm install --legacy-peer-deps
+# 2. Install dependensi
+pnpm install
 
 # 3. Buat file .env.local di root direktori
 cp .env.example .env.local
 
 # 4. Inisialisasi migrasi database
-npx drizzle-kit generate
-npx drizzle-kit migrate
+pnpm drizzle-kit generate
+pnpm drizzle-kit migrate
 
 # 5. Jalankan development server
-npm run dev
+pnpm dev
 # Buka http://localhost:3000
 ```
 
@@ -128,12 +128,12 @@ BETTER_AUTH_URL="http://localhost:3000"
 
 | Script | Deskripsi |
 |---|---|
-| `npm run dev` | Menjalankan server Next.js lokal untuk pengembangan |
-| `npm run build` | Melakukan kompilasi aplikasi untuk rilis produksi |
-| `npm start` | Menjalankan server produksi yang telah di-build |
-| `npm test` | Menjalankan unit test dengan Vitest |
-| `npx drizzle-kit generate` | Membuat file migrasi SQL baru dari skema data |
-| `npx drizzle-kit migrate` | Menjalankan migrasi SQL ke database |
+| `pnpm dev` | Menjalankan server Next.js lokal untuk pengembangan |
+| `pnpm build` | Melakukan kompilasi aplikasi untuk rilis produksi |
+| `pnpm start` | Menjalankan server produksi yang telah di-build |
+| `pnpm test` | Menjalankan unit test dengan Vitest |
+| `pnpm drizzle-kit generate` | Membuat file migrasi SQL baru dari skema data |
+| `pnpm drizzle-kit migrate` | Menjalankan migrasi SQL ke database |
 
 ---
 

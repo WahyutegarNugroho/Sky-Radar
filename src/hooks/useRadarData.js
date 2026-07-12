@@ -28,7 +28,7 @@ export function useRadarData(refreshInterval = 600000) {
 
   useEffect(() => {
     loadData();
-    // Set up auto-refresh
+    // ponytail: fixed refreshInterval, no error backoff. Add exponential backoff (double interval on fail) + document.visibilitychange refetch when needed.
     const intervalId = setInterval(() => {
       loadData();
     }, refreshInterval);

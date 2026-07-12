@@ -42,6 +42,7 @@ export function useMultiWeather(locations) {
 
     const fetchAll = async () => {
       setLoading(true);
+      // ponytail: all locations fetched in parallel — hits browser connection limit with 50+ locs. Add p-limit concurrency limiter when locations exceed 20.
       const results = await Promise.allSettled(
         currentLocs.map(async (loc) => {
           const normLon = ((loc.lng + 180) % 360 + 360) % 360 - 180;

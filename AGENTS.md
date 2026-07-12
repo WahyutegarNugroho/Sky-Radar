@@ -29,13 +29,13 @@ SkyRadar adalah aplikasi web pemantau cuaca real-time dengan peta interaktif. Me
 
 | Perintah | Fungsi |
 |----------|--------|
-| `npm run dev` | Jalankan Next.js dev server (port 3000) |
-| `npm run build` | Build production |
-| `npm start` | Jalankan production server |
-| `npm test` | Jalankan Vitest (semua file `*.test.*`) |
-| `npm run test:watch` | Jalankan Vitest dalam watch mode |
-| `npx drizzle-kit generate` | Generate migration dari schema |
-| `npx drizzle-kit migrate` | Apply migration ke database |
+| `pnpm dev` | Jalankan Next.js dev server (port 3000) |
+| `pnpm build` | Build production |
+| `pnpm start` | Jalankan production server |
+| `pnpm test` | Jalankan Vitest (semua file `*.test.*`) |
+| `pnpm test:watch` | Jalankan Vitest dalam watch mode |
+| `pnpm drizzle-kit generate` | Generate migration dari schema |
+| `pnpm drizzle-kit migrate` | Apply migration ke database |
 
 ### Project Structure
 
@@ -348,8 +348,8 @@ Identik dengan template AGENTS.md original (K-04). Poin penting untuk proyek ini
 
 ### Regression Checklist (wajib setelah perubahan)
 
-- [ ] `npm run build` lulus (0 error, 0 warning CSS)
-- [ ] `npm test` lulus (semua test yang ada)
+- [ ] `pnpm build` lulus (0 error, 0 warning CSS)
+- [ ] `pnpm test` lulus (semua test yang ada)
 - [ ] Console browser bebas error (test manual di localhost:3000)
 - [ ] Loading state muncul saat data belum siap
 - [ ] Error state muncul saat fetch gagal
@@ -394,7 +394,7 @@ const _unusedVar = require('./init');
 
 1. **Tidak ada emoji di kode** — UI text dalam Bahasa Indonesia tanpa emoji.
 2. **Inline SVG > icon font** — Gunakan `lucide-react` untuk icons.
-3. **`npm install` pakai `--legacy-peer-deps`** — Karena konflik better-auth/drizzle-orm/kysely.
+3. **`pnpm install`** — Menggantikan npm. Gunakan `--frozen-lockfile` di CI. Konfigurasi hoisting di `.npmrc` (`shamefully-hoist=true`) karena proyek awalnya pakai npm.
 4. **CSS Tailwind v4** — Pakai `@import "tailwindcss"` bukan `@tailwind` directives. Konfigurasi di `src/index.css`.
 5. **TypeScript progresif** — File `.ts` untuk utils/lib, komponen tetap `.jsx`.
 
@@ -554,7 +554,7 @@ src/__tests__/
 ### Build Notes
 - ESLint skip selama build (`ignoreDuringBuilds: true`)
 - TypeScript 6.0.3, `baseUrl` deprecation silenced dengan `ignoreDeprecations: "6.0"`
-- `npm install` butuh `--legacy-peer-deps`
+- Gunakan `pnpm` (bukan npm) — `.npmrc` dengan `shamefully-hoist=true`
 - CSS warning = `@screen` not supported di Tailwind v4 (gunakan media query biasa)
 
 ### Key Decisions
