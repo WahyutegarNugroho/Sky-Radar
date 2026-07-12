@@ -109,6 +109,24 @@ pnpm dev
 
 ---
 
+### Menjaga Database Tetap Aktif (Anti-Pause)
+
+Supabase free tier akan **pause** otomatis setelah 7 hari tanpa aktivitas. Gunakan cron eksternal gratis untuk ping endpoint ini setiap 24 jam:
+
+```
+GET https://domain-anda.com/api/ping
+```
+
+Cara setup:
+1. Daftar di [cron-job.org](https://cron-job.org) (gratis)
+2. Buat job dengan URL `https://domain-anda.com/api/ping`
+3. Set interval: `Setiap 24 jam`
+4. Simpan
+
+Atau gunakan [UptimeRobot](https://uptimerobot.com) (free 50 monitor) dengan interval 5 menit.
+
+---
+
 ### Environment Variables (.env.local)
 
 ```env
