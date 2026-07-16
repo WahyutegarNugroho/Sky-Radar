@@ -20,9 +20,9 @@ export function middleware(request) {
   }
 
   const now = Date.now();
-  if (Math.random() < 0.01) {
+  if (Math.random() < 0.01 || rateMap.size > 5000) {
     for (const [k, e] of rateMap.entries()) {
-      if (now > e.expiry) rateMap.delete(k);
+      if (now > e.expiry || rateMap.size > 5000) rateMap.delete(k);
     }
   }
 

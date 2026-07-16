@@ -5,18 +5,30 @@ import { auth } from '@/lib/auth';
 import { validateLocation } from '@/lib/validation';
 import { NextResponse } from 'next/server';
 
-vi.mock('@/db', () => ({
-  db: {
-    query: {
-      savedLocations: {
-        findMany: vi.fn(),
-      },
+vi.mock('@/db', () => {
+  const mockQuery = {
+    savedLocations: {
+      findMany: vi.fn(),
     },
-    insert: vi.fn(() => ({
-      values: vi.fn().mockResolvedValue(true),
-    })),
-  },
-}));
+  };
+  const mockInsert = vi.fn(() => ({
+    values: vi.fn().mockResolvedValue(true),
+  }));
+  const mockTransaction = vi.fn(async (cb) => {
+    return cb({
+      query: mockQuery,
+      insert: mockInsert,
+    });
+  });
+
+  return {
+    db: {
+      query: mockQuery,
+      insert: mockInsert,
+      transaction: mockTransaction,
+    },
+  };
+});
 
 vi.mock('@/lib/auth', () => ({
   auth: {

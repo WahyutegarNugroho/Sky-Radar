@@ -68,7 +68,9 @@ export function useMultiWeather(locations) {
         if (cached) return { name: loc.name, lat: loc.lat, lng: loc.lng, weather: cached, loading: false, error: null };
 
         const res = await fetch(`/api/weather?lat=${loc.lat}&lon=${normLon}`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
         const data = await res.json();
         setClientCache(cacheKey, data, CACHE_TTL);
         return { name: loc.name, lat: loc.lat, lng: loc.lng, weather: data, loading: false, error: null };
@@ -76,7 +78,7 @@ export function useMultiWeather(locations) {
       if (!active) return;
       setWeatherData(
         results.map((r, idx) =>
-          r.status === 'fulfilled'
+          r.status === 'fulfilled' && r.value
             ? r.value
             : {
                 name: currentLocs[idx].name,
@@ -84,7 +86,7 @@ export function useMultiWeather(locations) {
                 lng: currentLocs[idx].lng,
                 weather: null,
                 loading: false,
-                error: r.reason?.message || 'Gagal memuat cuaca',
+                error: (r.status === 'rejected' && r.reason instanceof Error ? r.reason.message : null) || 'Gagal memuat cuaca',
               }
         )
       );
